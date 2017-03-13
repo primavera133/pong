@@ -20,7 +20,7 @@ const login = (request, reply) => {
   } else {
     const validatedPayload = authValidationSchema.validate(request.payload)
     if (validatedPayload.error) {
-      return reply().redirect(error).code(500);
+      return reply({error: validatedPayload.error}).code(403);
     }
 
     const {email, password} = validatedPayload.value;

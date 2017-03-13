@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
+import Alert from '../Alert';
 
 export class App extends Component {
   constructor (props) {
@@ -10,6 +11,7 @@ export class App extends Component {
     return (
       <div>
         {this.props.children}
+        <Alert/>
       </div>
     )
   }

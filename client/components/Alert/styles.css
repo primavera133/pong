@@ -1,0 +1,11 @@
+:local .alert {
+	position: fixed;
+	top: auto !important;
+	bottom: 0 !important;
+	left: 50% !important;
+	right: auto;
+	width: auto;
+	text-align: center;
+	transform: translateX(-50%);
+	z-index: 2000;
+}

@@ -1,0 +1,30 @@
+{
+  "sv-SE": {
+    "common": {
+      "appName": "pong"
+    },
+    "alerts": {
+      "danger": {
+        "invalidAuth": "Ogiltig e-post eller lösenord",
+        "generalError": "Ojdå! Något gick fel.",
+        "noPermissions": "Du saknar behörighet för att göra detta.",
+        "keyConflict": "Användarnamnet finns redan."
+      },
+      "warning": {
+        "loggedOut": "Du har blivit utloggad. Vänligen logga in igen!"
+      },
+      "success": {
+        "login": "Du har loggat in!",
+        "logout": "Du har loggat ut!",
+        "linkSent": "Länken har skickats!"
+      },
+      "confirm": {
+      }
+    }
+  },
+  "en-US": {
+    "common": {
+      "appName": "pong"
+    }
+  }
+}

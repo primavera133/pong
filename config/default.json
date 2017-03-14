@@ -2,6 +2,7 @@
   "auth": {
     "email": "admin",
     "password": "pass",
+    "ttl": 86400000,
     "key": "EgPrcWSqwCkaV5N6BkpAAYdac3MgpFhBvNZ5hLtJkdvLwu2C5PsamQADMt9pbE5R"
   },
   "database": {

@@ -14,7 +14,10 @@ const login = (request, reply) => {
 
     const {email} = request.payload;
 
-    request.cookieAuth.set({email})
+    request.cookieAuth.set({
+      email: email,
+      scope: 'admin'
+    })
 
     reply({email}).code(200)
   } else {
@@ -29,8 +32,11 @@ const login = (request, reply) => {
       if (error || players.length === 0) {
         return reply({message: 'Wrong email or password'}).code(417)
       }
-
-      request.cookieAuth.set({email})
+      const auth = {
+        email: email,
+        scope: 'player'
+      }
+      request.cookieAuth.set(auth)
 
       reply({email}).code(200)
     });
@@ -42,14 +48,21 @@ const logout = (request, reply) => {
   reply({message: 'auth/logout'})
 }
 
+const ping = (request, reply) => {
+  reply(request.auth.credentials);
+};
+
 exports.register = (server, options, next) => {
   server.register(CookieAuth, (error) => {
     if (error) throw error
 
+    const cache = server.cache({ segment: 'sessions', expiresIn: config.get('auth.ttl') });
+    server.app.cache = cache;
+
     server.auth.strategy('session', 'cookie', {
       password: config.get('auth.key'),
-      isSecure: process.env.NODE_ENV === 'production',
-      isHttpOnly: true
+      cookie: 'sid-pong',
+      isSecure: false
     })
 
     server.route([
@@ -76,6 +89,18 @@ exports.register = (server, options, next) => {
         config: {
           handler: logout,
           auth: 'session'
+        }
+      },
+
+      {
+        method: 'GET',
+        path: '/auth/ping',
+        config: {
+          handler: ping,
+          auth: {
+            mode: 'try',
+            strategy: 'session'
+          }
         }
       }
     ])

@@ -1,15 +1,26 @@
-import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
+import React, {Component, PropTypes} from 'react'
+import {connect} from 'react-redux'
+import LimitUser from '../LimitUser';
 import Alert from '../Alert';
 
 export class App extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
   }
 
-  render () {
+  render() {
     return (
       <div>
+        <LimitUser scope="*">
+          <div>
+            <LimitUser scope={['player']}>
+              <p>PLAYER!</p>
+            </LimitUser>
+            <LimitUser scope={['admin']}>
+              <p>ADMIN!</p>
+            </LimitUser>
+          </div>
+        </LimitUser>
         {this.props.children}
         <Alert/>
       </div>

@@ -10,7 +10,7 @@ export const receiveItems = () => (dispatch) => {
         payload: JSON.parse(request.responseText)
       })
     } else if (request.status === 401) {
-      dispatch(routeActions.push('/authenticate'))
+      dispatch(routeActions.push('/login'))
     }
   }
   request.send()
@@ -28,7 +28,7 @@ export const createItem = (item) => (dispatch) => {
       })
       window.alert('Item is saved')
     } else if (request.status === 401) {
-      dispatch(routeActions.push('/authenticate'))
+      dispatch(routeActions.push('/login'))
     }
   }
   request.send(JSON.stringify(game))
@@ -44,7 +44,7 @@ export const deleteItem = (id) => (dispatch) => {
         payload: JSON.parse(request.responseText)
       })
     } else if (request.status === 401) {
-      dispatch(routeActions.push('/authenticate'))
+      dispatch(routeActions.push('/login'))
     }
   }
   request.send()
@@ -62,7 +62,7 @@ export const updateItem = (item) => (dispatch) => {
       })
       window.alert('Item is updated')
     } else if (request.status === 401) {
-      dispatch(routeActions.push('/authenticate'))
+      dispatch(routeActions.push('/login'))
     }
   }
   request.send(JSON.stringify(game))

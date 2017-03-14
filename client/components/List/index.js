@@ -33,7 +33,7 @@ export class List extends Component {
   }
 
   handleSignOut (event) {
-    this.props.dispatch(signOut('/authenticate'))
+    this.props.dispatch(signOut('/login'))
   }
 
   render () {

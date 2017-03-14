@@ -5,6 +5,7 @@ module.exports = {
   devtool: 'source-map',
   entry: [
     'babel-polyfill',
+    'webpack-hot-middleware/client',
     './client/index'
   ],
   output: {
@@ -13,6 +14,7 @@ module.exports = {
     publicPath: '/static/'
   },
   plugins: [
+    new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     function () {
       this.plugin('done', function (stats) {
@@ -26,15 +28,16 @@ module.exports = {
   resolve: {
     alias: {}
   },
+  watch: true,
   module: {
     loaders: [
       {
         test: /\.js$/,
-        loaders: ['babel'],
+        loaders: ['react-hot', 'babel'],
         include: path.join(__dirname, '..', 'client')
       },
-      { test: /\.css$/, loader: 'style-loader!css-loader' },
-      { test: /\.json$/, loader: 'json-loader' }
+      {test: /\.css$/, loader: 'style-loader!css-loader'},
+      {test: /\.json$/, loader: 'json-loader'}
     ]
   }
 }

@@ -24,3 +24,7 @@ export const signOut = (path) => (dispatch) => {
   }
   request.send()
 }
+
+export const gotoLogin = () => (dispatch) => {
+  dispatch(routeActions.replace('/authenticate'));
+}

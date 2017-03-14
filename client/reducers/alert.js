@@ -16,7 +16,6 @@ export default handleActions({
 		};
 	},
 	SHOW_DANGER: (state, action) => {
-		console.log(action.payload)
 		return {
 			...state,
 			message: action.payload,

@@ -8,6 +8,7 @@
         "invalidAuth": "Ogiltig e-post eller lösenord",
         "generalError": "Ojdå! Något gick fel.",
         "noPermissions": "Du saknar behörighet för att göra detta.",
+        "notAcceptable": "Inte acceptabelt!",
         "keyConflict": "Användarnamnet finns redan."
       },
       "warning": {

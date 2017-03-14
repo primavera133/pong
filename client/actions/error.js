@@ -23,6 +23,11 @@ export const httpError = (error) => (dispatch) => {
       return;
     }
 
+    if (error.response.status === 417) {
+      dispatch(showDanger(t('danger.invalidAuth')));
+      return;
+    }
+
     if (error.response.status === 409) {
       dispatch(showDanger(t('danger.keyConflict')));
       return;

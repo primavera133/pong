@@ -5,7 +5,7 @@ import {authValidationSchema} from '../../validators/auth'
 
 const login = (request, reply) => {
   if (!request.payload.email || !request.payload.password) {
-    return reply({message: 'Missing email or password'}).code(401)
+    return reply({message: 'Missing email or password'}).code(417)
   }
 
   //admin
@@ -20,14 +20,14 @@ const login = (request, reply) => {
   } else {
     const validatedPayload = authValidationSchema.validate(request.payload)
     if (validatedPayload.error) {
-      return reply({error: validatedPayload.error}).code(403);
+      return reply({error: validatedPayload.error}).code(401);
     }
 
     const {email, password} = validatedPayload.value;
 
     Player.find({email: email, password: password}, (error, players) => {
       if (error || players.length === 0) {
-        return reply({message: 'Wrong email or password'}).code(401)
+        return reply({message: 'Wrong email or password'}).code(417)
       }
 
       request.cookieAuth.set({email})

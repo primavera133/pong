@@ -1,46 +1,92 @@
-import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
-import { signIn } from '../../actions/auth.js'
+import React, {Component, PropTypes} from 'react'
+import {connect} from 'react-redux'
+import validation from 'react-validation-mixin';
+import strategy from 'joi-validation-strategy';
+import {signIn} from '../../actions/auth.js'
+import {translate} from 'react-i18next';
+import {FormGroup, FormControl, ControlLabel, Button} from 'react-bootstrap';
+import FormComponent from '../FormComponent';
+import {loginValidationSchema} from '../../../validators/login';
 
-export class Authenticate extends Component {
-  constructor (props) {
+export class Authenticate extends FormComponent {
+  constructor(props) {
     super(props)
 
     this.state = {
-      email: null,
-      password: null
+      email: '',
+      password: ''
     }
+
+    this.validatorTypes = loginValidationSchema;
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit (event) {
-    event.preventDefault()
-
-    this.props.dispatch(signIn(this.state, '/list'))
+  handleChange(event, field) {
+    this.setState({[field]: event.target.value});
   }
 
-  render () {
+  handleSubmit(event) {
+    event.preventDefault();
+
+    this.props.validate((error) => {
+      if (!error) {
+        this.props.dispatch(signIn(this.state, '/list'))
+      }
+    });
+  }
+
+  render() {
+    const {t} = this.props;
+
     return (
-      <form onSubmit={this.handleSubmit.bind(this)}>
-        <label htmlFor='email'>E-mail</label>
-        <input
-          id='email'
-          type='text'
-          onChange={e => this.setState({email: e.target.value})} />
+      <div>
+        <form id="loginForm" onSubmit={this.handleSubmit.bind(this)}>
+          <FormGroup validationState={this.getValidationState('email')}>
+            <ControlLabel htmlFor="form-name">{t('email')}</ControlLabel>
+            <FormControl
+              id="form-email"
+              value={this.state.email}
+              type="text"
+              onChange={(e) => this.handleChange(e, 'email')}
+              onFocus={this.handleFocus('email')}
+              onBlur={this.handleBlur('email')}/>
+            <FormControl.Feedback />
+          </FormGroup>
 
-        <label htmlFor='password'>Password</label>
-        <input
-          id='password'
-          type='text'
-          onChange={e => this.setState({password: e.target.value})} />
+          <FormGroup validationState={this.getValidationState('password')}>
+            <ControlLabel htmlFor="form-name">{t('password')}</ControlLabel>
+            <FormControl
+              id="form-password"
+              value={this.state.password}
+              type="password"
+              onChange={(e) => this.handleChange(e, 'password')}
+              onFocus={this.handleFocus('password')}
+              onBlur={this.handleBlur('password')}/>
+            <FormControl.Feedback />
+          </FormGroup>
 
-        <button type='submit'>Submit</button>
-      </form>
+          <Button
+            type="submit"
+            form="loginForm"
+            bsStyle="primary"
+            onClick={this.handleSubmit}>
+            {t('loggIn')}
+          </Button>
+
+        </form>
+
+        <a href="/signup">Sign up</a>
+      </div>
     )
   }
 }
 
-Authenticate.propTypes = {
-  dispatch: PropTypes.func
-}
+const mapStateToProps = (state) => {
+  return {
+    scope: state.auth.scope
+  };
+};
 
-export default connect()(Authenticate)
+export default connect(mapStateToProps)(translate('authenticateView')(validation(strategy)(Authenticate)))

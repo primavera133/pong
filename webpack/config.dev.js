@@ -26,7 +26,9 @@ module.exports = {
     }
   ],
   resolve: {
-    alias: {}
+    alias: {
+      'joi': 'joi-browser'
+    }
   },
   watch: true,
   module: {
@@ -34,7 +36,10 @@ module.exports = {
       {
         test: /\.js$/,
         loaders: ['react-hot', 'babel'],
-        include: path.join(__dirname, '..', 'client')
+        include: [
+          path.join(__dirname, '..', 'client'),
+          path.join(__dirname, '..', 'validators')
+        ]
       },
       {test: /\.css$/, loader: 'style-loader!css-loader'},
       {test: /\.json$/, loader: 'json-loader'}

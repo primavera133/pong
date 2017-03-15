@@ -21,6 +21,11 @@
       },
       "confirm": {
       }
+    },
+    "authenticateView": {
+      "email": "E-mail",
+      "password": "Password",
+      "loggIn": "Logga in"
     }
   },
   "en-US": {

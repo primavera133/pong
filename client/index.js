@@ -1,8 +1,10 @@
 import React from 'react'
-import store from './store';
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { Router, Route, IndexRedirect, browserHistory } from 'react-router'
+import { I18nextProvider } from 'react-i18next';
+import i18n from './config/i18n';
+import store from './store';
 
 import App from './components/App'
 import List from './components/List'
@@ -13,6 +15,7 @@ import { requireAuth, updateHealthCenter, updateCorporation, updateUser, updateE
 
 render((
   <Provider store={store}>
+    <I18nextProvider i18n={i18n}>
     <Router history={browserHistory}>
       <Route path="/" component={App}>
         <IndexRedirect to='/list'/>
@@ -22,5 +25,6 @@ render((
         <Route path='/login' component={Authenticate} onEnter={requireAuth}/>
       </Route>
     </Router>
+    </I18nextProvider>
   </Provider>
 ), document.getElementById('root'))

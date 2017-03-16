@@ -7,8 +7,7 @@
   "scripts": {
     "mongo:start": "mongod --config /usr/local/etc/mongod.conf --fork --logpath /dev/null",
     "mongo:stop": "mongo admin --eval 'db.shutdownServer()' > /dev/null",
-    "build:clean": "rimraf dist/client/static/temp",
-    "dev": "npm run build:clean && NODE_ENV=development nodemon --watch server --watch validators --watch config index.js --debug"
+    "dev": "NODE_ENV=development nodemon --watch server --watch validators --watch config index.js --debug"
   },
   "dependencies": {
     "axios": "^0.15.3",
@@ -44,7 +43,6 @@
     "redux-actions": "^2.0.1",
     "redux-simple-router": "^2.0.4",
     "redux-thunk": "^2.1.0",
-    "rimraf": "^2.5.2",
     "style-loader": "^0.13.2",
     "webpack": "^1.13.1"
   },

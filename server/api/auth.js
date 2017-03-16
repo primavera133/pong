@@ -38,7 +38,7 @@ const login = (request, reply) => {
       setPlayer({
         request,
         email,
-        scope: 'admin'
+        scope: 'player'
       });
 
       reply({email}).code(200)

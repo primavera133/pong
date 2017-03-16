@@ -1,39 +1,39 @@
-import Game from '../models/game'
+import Match from '../models/match'
 import {idValidationSchema} from '../../validators/id';
-import {gameValidationSchema} from '../../validators/game';
+import {matchValidationSchema} from '../../validators/match';
 
-const getGame = (request, reply) => {
-  Game.findById(request.params.gameId, (error, items) => {
+const getMatch = (request, reply) => {
+  Match.findById(request.params.matchId, (error, items) => {
     if (error) return reply(error).code(500)
 
     return reply(items).code(200)
   })
 }
 
-const addGame = (request, reply) => {
-  const validatedPayload = gameValidationSchema.validate(request.payload)
+const addMatch = (request, reply) => {
+  const validatedPayload = matchValidationSchema.validate(request.payload)
   if (validatedPayload.error) {
     return reply().redirect(error).code(500);
   }
 
-  const game = new Game(validatedPayload.value)
-  game.save(error => {
+  const match = new Match(validatedPayload.value)
+  match.save(error => {
     if (error) return reply({error: error.message}).code(400)
 
-    return reply(game).code(200)
+    return reply(match).code(200)
   })
 }
 
-const updateGame = (request, reply) => {
-  Game.findOne({_id: request.params.id}, (error, game) => {
+const updateMatch = (request, reply) => {
+  Match.findOne({_id: request.params.id}, (error, match) => {
     if (error) return reply(error).code(500)
 
-    const validatedPayload = gameValidationSchema.validate(request.payload)
+    const validatedPayload = matchValidationSchema.validate(request.payload)
     if (validatedPayload.error) {
       return reply().redirect(error).code(500);
     }
 
-    const i = Object.assign(game, validatedPayload.value)
+    const i = Object.assign(match, validatedPayload.value)
     i.save((error, doc) => {
       if (error) return reply({error: error.message}).code(400)
 
@@ -46,9 +46,9 @@ exports.register = (server, options, next) => {
   server.route([
     {
       method: 'GET',
-      path: '/api/games/{gameId}',
+      path: '/api/matches/{matchId}',
       config: {
-        handler: getGame,
+        handler: getMatch,
         auth: 'session',
         validate: {
           params: idValidationSchema
@@ -58,18 +58,18 @@ exports.register = (server, options, next) => {
 
     {
       method: 'POST',
-      path: '/api/games',
+      path: '/api/matches',
       config: {
-        handler: addGame,
+        handler: addMatch,
         auth: 'session'
       }
     },
 
     {
       method: 'PUT',
-      path: '/api/games/{gameId}',
+      path: '/api/matches/{matchId}',
       config: {
-        handler: updateGame,
+        handler: updateMatch,
         auth: 'session',
         validate: {
           params: idValidationSchema
@@ -83,5 +83,5 @@ exports.register = (server, options, next) => {
 }
 
 exports.register.attributes = {
-  name: 'games'
+  name: 'matches'
 }

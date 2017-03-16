@@ -12,13 +12,13 @@ const addItem = (request, reply) => {
   Item.findOne({name: request.payload.name}, (error, item) => {
     if (error) return reply(error).code(500)
 
-    if (game) return reply({error: 'Item already exists'}).code(400)
+    if (item) return reply({error: 'Item already exists'}).code(400)
 
-    game = new Item(request.payload)
-    game.save(error => {
+    item = new Item(request.payload)
+    item.save(error => {
       if (error) return reply({error: error.message}).code(400)
 
-      return reply(game).code(200)
+      return reply(item).code(200)
     })
   })
 }
@@ -27,7 +27,7 @@ const updateItem = (request, reply) => {
   Item.findOne({_id: request.params.id}, (error, item) => {
     if (error) return reply(error).code(500)
 
-    const i = Object.assign(game, request.payload)
+    const i = Object.assign(item, request.payload)
 
     i.save((error, doc) => {
       if (error) return reply({error: error.message}).code(400)
@@ -41,7 +41,7 @@ const deleteItem = (request, reply) => {
   Item.findOne({_id: request.params.id}, (error, item) => {
     if (error) return reply(error).code(500)
 
-    game.remove(error => {
+    item.remove(error => {
       if (error) return reply({error: error.message}).code(400)
       return reply({id: request.params.id}).code(200)
     })

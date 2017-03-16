@@ -47,16 +47,16 @@ export class List extends Component {
         </nav>
         <ul>
           {this.props.items.map(item =>
-            <li key={game._id}>
-              <span>{game.name}</span>
+            <li key={item._id}>
+              <span>{item.name}</span>
               <button
                 onClick={this.handleItemUpdate.bind(this)}
-                data-id={game._id}>
+                data-id={item._id}>
                   Update
                 </button>
               <button
                 onClick={this.handleItemDelete.bind(this)}
-                data-id={game._id}>
+                data-id={item._id}>
                   X
                 </button>
             </li>

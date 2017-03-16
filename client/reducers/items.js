@@ -15,7 +15,7 @@ export default handleActions({
   },
   DELETE_ITEM: (state, action) => {
     const items = state.list.filter(item => {
-      return game._id !== action.payload.id
+      return item._id !== action.payload.id
     })
     return {
       ...state,
@@ -24,10 +24,10 @@ export default handleActions({
   },
   UPDATE_ITEM: (state, action) => {
     const items = state.list.map(item => {
-      if (game._id === action.payload._id) {
+      if (item._id === action.payload._id) {
         return action.payload
       }
-      return game
+      return item
     })
     return {
       ...state,

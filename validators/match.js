@@ -1,7 +1,7 @@
 import Joi from 'joi'
 
-export const gameValidationSchema = Joi.object().keys({
-    gameType: Joi
+export const matchValidationSchema = Joi.object().keys({
+    game: Joi
         .string()
         .required(),
     playerOne: Joi

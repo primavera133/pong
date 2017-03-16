@@ -1,5 +1,5 @@
 import Joi from 'joi'
-import {gameValidationSchema} from './game'
+import {matchValidationSchema} from './match'
 
 export const playerValidationSchema = Joi.object().keys({
   name: Joi
@@ -28,7 +28,7 @@ export const playerValidationSchema = Joi.object().keys({
     .optional(),
   games: Joi
     .array()
-    .items(gameValidationSchema)
+    .items(matchValidationSchema)
     .optional()
 }).options({
   stripUnknown: true,

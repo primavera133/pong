@@ -34,8 +34,8 @@ const signUpPlayer = (request, reply) => {
   })
 }
 
-const updateGame = (request, reply) => {
-  Player.findOne({_id: request.params.id}, (error, game) => {
+const updateMatch = (request, reply) => {
+  Player.findOne({_id: request.params.id}, (error, match) => {
     if (error) return reply(error).code(500)
 
     const validatedPayload = playerValidationSchema.validate(request.payload)
@@ -43,7 +43,7 @@ const updateGame = (request, reply) => {
       return reply().redirect(error).code(500);
     }
 
-    const i = Object.assign(game, validatedPayload.value)
+    const i = Object.assign(match, validatedPayload.value)
     i.save((error, doc) => {
       if (error) return reply({error: error.message}).code(400)
 
@@ -82,7 +82,7 @@ exports.register = (server, options, next) => {
       method: 'PUT',
       path: '/api/players/{id}',
       config: {
-        handler: updateGame,
+        handler: updateMatch,
         auth: 'session',
         validate: {
           params: idValidationSchema

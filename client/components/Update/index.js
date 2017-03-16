@@ -13,14 +13,14 @@ export class Update extends Component {
   }
 
   componentDidMount () {
-    if (this.props.game) {
-      this.setState(this.props.game)
+    if (this.props.item) {
+      this.setState(this.props.item)
     }
   }
 
-  componentWillReceiveProps ({game}) {
-    if (game && game._id !== this.state._id) {
-      this.setState(game)
+  componentWillReceiveProps ({item}) {
+    if (item && item._id !== this.state._id) {
+      this.setState(item)
     }
   }
 

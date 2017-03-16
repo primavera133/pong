@@ -19,11 +19,11 @@ const playerSchema = Schema({
     type: String,
     required: false
   },
-  games: [{
+  matches: [{
     id: {
       type: Schema.Types.ObjectId
     },
-    gameType: {
+    game: {
       type: String,
       required: true
     },

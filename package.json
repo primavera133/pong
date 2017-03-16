@@ -1,7 +1,7 @@
 {
   "name": "pong",
   "version": "0.0.1",
-  "description": "A two person game engine",
+  "description": "A two person match engine",
   "main": "index.js",
   "author": "Jonas Myrenås",
   "scripts": {

@@ -1,7 +1,7 @@
 import mongoose, {Schema} from 'mongoose'
 
-const gameSchema = Schema({
-    gameType: {
+const matchSchema = Schema({
+    game: {
         type: String,
         required: true
     },
@@ -15,4 +15,4 @@ const gameSchema = Schema({
     }
 })
 
-export default mongoose.model('Game', gameSchema)
+export default mongoose.model('Match', matchSchema)

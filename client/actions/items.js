@@ -31,7 +31,7 @@ export const createItem = (item) => (dispatch) => {
       dispatch(routeActions.push('/login'))
     }
   }
-  request.send(JSON.stringify(game))
+  request.send(JSON.stringify(item))
 }
 
 export const deleteItem = (id) => (dispatch) => {
@@ -52,7 +52,7 @@ export const deleteItem = (id) => (dispatch) => {
 
 export const updateItem = (item) => (dispatch) => {
   const request = new XMLHttpRequest()
-  request.open('PUT', `/api/items/${game._id}`, true)
+  request.open('PUT', `/api/items/${item._id}`, true)
   request.setRequestHeader('Content-Type', 'application/json')
   request.onload = () => {
     if (request.status >= 200 && request.status < 400) {
@@ -65,5 +65,5 @@ export const updateItem = (item) => (dispatch) => {
       dispatch(routeActions.push('/login'))
     }
   }
-  request.send(JSON.stringify(game))
+  request.send(JSON.stringify(item))
 }

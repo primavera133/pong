@@ -7,6 +7,7 @@ import i18n from './config/i18n';
 import store from './store';
 
 import App from './components/App'
+import SignUp from './components/SignUp'
 import List from './components/List'
 import Create from './components/Create'
 import Authenticate from './components/Authenticate'
@@ -20,6 +21,7 @@ render((
       <Route path="/" component={App}>
         <IndexRedirect to='/list'/>
 
+        <Route path="/signup" component={SignUp} onEnter={requireAuth}/>
         <Route path="/list" component={List} onEnter={requireAuth}/>
         <Route path="/create" component={Create} onEnter={requireAuth}/>
         <Route path='/login' component={Authenticate} onEnter={requireAuth}/>

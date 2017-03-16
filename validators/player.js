@@ -2,23 +2,37 @@ import Joi from 'joi'
 import {gameValidationSchema} from './game'
 
 export const playerValidationSchema = Joi.object().keys({
-    name: Joi
-        .string()
-        .required(),
-    password: Joi
-        .string()
-        .required(),
-    email: Joi
-        .string()
-        .required(),
-    phone: Joi
-        .string()
-        .optional(),
-    games: Joi
-        .array()
-        .items(gameValidationSchema)
-        .optional()
+  name: Joi
+    .string()
+    .trim()
+    .required(),
+  password: Joi
+    .string()
+    .min(8)
+    .trim()
+    .required(),
+  passwordMatch: Joi
+    .string()
+    .min(8)
+    .trim()
+    .valid(Joi.ref('password')),
+  email: Joi
+    .string()
+    .email()
+    .trim()
+    .required(),
+  phone: Joi
+    .string()
+    .trim()
+    .allow('')
+    .optional(),
+  games: Joi
+    .array()
+    .items(gameValidationSchema)
+    .optional()
 }).options({
-    stripUnknown: true,
-    allowUnknown: true
+  stripUnknown: true,
+  allowUnknown: true
 });
+
+

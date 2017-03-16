@@ -2,6 +2,7 @@ import config from 'config'
 import CookieAuth from 'hapi-auth-cookie'
 import Player from '../models/player'
 import {authValidationSchema} from '../../validators/auth'
+import {setPlayer} from '../helpers/authHelper';
 
 const login = (request, reply) => {
   if (!request.payload.email || !request.payload.password) {
@@ -14,10 +15,11 @@ const login = (request, reply) => {
 
     const {email} = request.payload;
 
-    request.cookieAuth.set({
-      email: email,
+    setPlayer({
+      request,
+      email,
       scope: 'admin'
-    })
+    });
 
     reply({email}).code(200)
   } else {
@@ -32,11 +34,12 @@ const login = (request, reply) => {
       if (error || players.length === 0) {
         return reply({message: 'Wrong email or password'}).code(417)
       }
-      const auth = {
-        email: email,
-        scope: 'player'
-      }
-      request.cookieAuth.set(auth)
+
+      setPlayer({
+        request,
+        email,
+        scope: 'admin'
+      });
 
       reply({email}).code(200)
     });

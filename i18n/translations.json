@@ -9,7 +9,11 @@
         "generalError": "Ojdå! Något gick fel.",
         "noPermissions": "Du saknar behörighet för att göra detta.",
         "notAcceptable": "Inte acceptabelt!",
-        "keyConflict": "Användarnamnet finns redan."
+        "keyConflict": {
+          "username": "Användarnamnet finns redan.",
+          "email": "E-postadressen finns redan",
+          "default": "ett fält fanns redan"
+        }
       },
       "warning": {
         "loggedOut": "Du har blivit utloggad. Vänligen logga in igen!"
@@ -23,9 +27,20 @@
       }
     },
     "authenticateView": {
+      "loginHeader": "Logga in",
       "email": "E-mail",
       "password": "Password",
       "loggIn": "Logga in"
+    },
+    "signUpView": {
+      "signUpHeader": "Skapa ett konto",
+      "name": "Ditt namn",
+      "email": "Din epost",
+      "password": "Önskat lösenord (minst 8 tecken)",
+      "passwordMatch": "upprepa lösenord",
+      "phone": "telefonnummer",
+      "signUpSubmit": "Skapa ett konto",
+      "loginLink": "Logga in"
     }
   },
   "en-US": {

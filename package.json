@@ -7,7 +7,7 @@
   "scripts": {
     "mongo:start": "mongod --config /usr/local/etc/mongod.conf --fork --logpath /dev/null",
     "mongo:stop": "mongo admin --eval 'db.shutdownServer()' > /dev/null",
-    "build:clean": "rimraf dist/client/static",
+    "build:clean": "rimraf dist/client/static/temp",
     "dev": "npm run build:clean && NODE_ENV=development nodemon --watch server --watch validators --watch config index.js --debug"
   },
   "dependencies": {

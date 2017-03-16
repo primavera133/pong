@@ -29,7 +29,14 @@ export const httpError = (error) => (dispatch) => {
     }
 
     if (error.response.status === 409) {
-      dispatch(showDanger(t('danger.keyConflict')));
+      if (error.response) {
+        if (error.response.data.code === 11000) {
+          if(error.response.data.field ==='email'){
+            return dispatch(showDanger(t('danger.keyConflict.email')));
+          }
+        }
+      }
+      dispatch(showDanger(t('danger.keyConflict.default')));
       return;
     }
   }

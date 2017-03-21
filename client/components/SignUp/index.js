@@ -1,12 +1,12 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
-import validation from 'react-validation-mixin';
-import strategy from 'joi-validation-strategy';
-import {signUp} from '../../actions/player';
-import {translate} from 'react-i18next';
-import {PageHeader, Panel, FormGroup, FormControl, ControlLabel, Button} from 'react-bootstrap';
-import FormComponent from '../FormComponent';
-import {playerValidationSchema} from '../../../validators/player';
+import validation from 'react-validation-mixin'
+import strategy from 'joi-validation-strategy'
+import {signUp} from '../../actions/player'
+import {translate} from 'react-i18next'
+import {PageHeader, Panel, FormGroup, FormControl, ControlLabel, Button} from 'react-bootstrap'
+import FormComponent from '../FormComponent'
+import {playerValidationSchema} from '../../../validators/player'
 
 export class SignUp extends FormComponent {
   constructor(props) {

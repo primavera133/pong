@@ -1,6 +1,23 @@
 import Match from '../models/match'
-import {idValidationSchema} from '../../validators/id';
-import {matchValidationSchema} from '../../validators/match';
+import {idValidationSchema} from '../../validators/basic';
+import {matchValidationSchema, matchStartValidationSchema} from '../../validators/match';
+
+const getMatchList = (request, reply) => {
+  const query = {
+    $or: [
+      {
+        'playerOne.playerId': request.auth.credentials._id
+      }, {
+        'playerTwo.playerId': request.auth.credentials._id
+      }
+    ]
+  };
+  Match.find(query, (error, matches) => {
+    if (error) return reply(error).code(500)
+
+    return reply(matches).code(200)
+  })
+}
 
 const getMatch = (request, reply) => {
   Match.findById(request.params.matchId, (error, items) => {
@@ -11,12 +28,27 @@ const getMatch = (request, reply) => {
 }
 
 const addMatch = (request, reply) => {
-  const validatedPayload = matchValidationSchema.validate(request.payload)
+  const validatedPayload = matchStartValidationSchema.validate(request.payload)
   if (validatedPayload.error) {
     return reply().redirect(error).code(500);
   }
 
-  const match = new Match(validatedPayload.value)
+  const match = new Match({
+    playerOne: {
+      playerId: request.auth.credentials._id,
+      name: request.auth.credentials.name
+    },
+    playerTwo: {
+      playerId: validatedPayload.value.opponent._id,
+      name: validatedPayload.value.opponent.name,
+      accepted: false
+    },
+    game: {
+      gameId: validatedPayload.value.game._id,
+      name: validatedPayload.value.game.name
+    }
+  })
+
   match.save(error => {
     if (error) return reply({error: error.message}).code(400)
 
@@ -44,6 +76,15 @@ const updateMatch = (request, reply) => {
 
 exports.register = (server, options, next) => {
   server.route([
+    {
+      method: 'GET',
+      path: '/api/matches',
+      config: {
+        handler: getMatchList,
+        auth: 'session',
+      }
+    },
+
     {
       method: 'GET',
       path: '/api/matches/{matchId}',

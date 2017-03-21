@@ -17,6 +17,8 @@ const login = (request, reply) => {
 
     setPlayer({
       request,
+      _id: '',
+      name: 'admin',
       email,
       scope: 'admin'
     });
@@ -30,13 +32,15 @@ const login = (request, reply) => {
 
     const {email, password} = validatedPayload.value;
 
-    Player.find({email: email, password: password}, (error, players) => {
-      if (error || players.length === 0) {
+    Player.findOne({email: email, password: password}, (error, player) => {
+      if (error) {
         return reply({message: 'Wrong email or password'}).code(417)
       }
 
       setPlayer({
         request,
+        _id: player._id,
+        name: player.name,
         email,
         scope: 'player'
       });
@@ -59,8 +63,7 @@ exports.register = (server, options, next) => {
   server.register(CookieAuth, (error) => {
     if (error) throw error
 
-    const cache = server.cache({ segment: 'sessions', expiresIn: config.get('auth.ttl') });
-    server.app.cache = cache;
+    server.app.cache = server.cache({ segment: 'sessions', expiresIn: config.get('auth.ttl') });
 
     server.auth.strategy('session', 'cookie', {
       password: config.get('auth.key'),

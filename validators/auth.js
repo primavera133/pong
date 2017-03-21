@@ -9,4 +9,7 @@ export const authValidationSchema = Joi.object().keys({
   password: Joi
     .string()
     .required()
+}).options({
+  stripUnknown: true,
+  allowUnknown: true
 });

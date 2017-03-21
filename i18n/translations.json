@@ -41,6 +41,14 @@
       "phone": "telefonnummer",
       "signUpSubmit": "Skapa ett konto",
       "loginLink": "Logga in"
+    },
+    "matchStartView": {
+      "header1": "Starta en ny match",
+      "headerFriendslist": "Vänner",
+      "headerFindAFriend": "Hitta en motståndare",
+      "name": "Användarnamn",
+      "headerSuggestions": "Förslag",
+      "opponent": "Motståndare"
     }
   },
   "en-US": {

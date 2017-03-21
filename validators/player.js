@@ -29,10 +29,14 @@ export const playerValidationSchema = Joi.object().keys({
   games: Joi
     .array()
     .items(matchValidationSchema)
-    .optional()
+    .optional(),
+  friends: Joi
+    .array()
+    .items({
+      _id: Joi.string(),
+      name: Joi.string()
+    })
 }).options({
   stripUnknown: true,
   allowUnknown: true
 });
-
-

@@ -7,6 +7,7 @@ import base from './base'
 import auth from './api/auth'
 import players from './api/players'
 import matches from './api/matches'
+import games from './api/games'
 import items from './api/items'
 
 mongoose.connect(config.get('database.host'))
@@ -59,6 +60,9 @@ server.register([
   },
   {
     register: matches
+  },
+  {
+    register: games
   },
   {
     register: players

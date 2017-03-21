@@ -31,6 +31,9 @@ export const httpError = (error) => (dispatch) => {
     if (error.response.status === 409) {
       if (error.response) {
         if (error.response.data.code === 11000) {
+          if(error.response.data.field ==='name'){
+            return dispatch(showDanger(t('danger.keyConflict.username')));
+          }
           if(error.response.data.field ==='email'){
             return dispatch(showDanger(t('danger.keyConflict.email')));
           }
@@ -40,6 +43,6 @@ export const httpError = (error) => (dispatch) => {
       return;
     }
   }
-
+console.log(222222, error)
   return dispatch(showDanger(t('danger.generalError')));
 };

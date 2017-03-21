@@ -3,6 +3,7 @@ import mongoose, {Schema} from 'mongoose'
 const playerSchema = Schema({
   name: {
     type: String,
+    unique: true,
     required: true
   },
   password: {
@@ -31,6 +32,16 @@ const playerSchema = Schema({
       type: Schema.Types.ObjectId,
       required: false
     }
+  }],
+  friends: [{
+    _id: {
+      type: Schema.Types.ObjectId,
+      required: true
+    },
+    name: {
+      type: String,
+      required: true
+    },
   }]
 })
 

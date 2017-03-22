@@ -1,49 +1,50 @@
 import Item from '../models/item'
+import Boom from 'boom';
 
 const getItems = (request, reply) => {
   Item.find({}, (error, items) => {
-    if (error) return reply(error).code(500)
+    if (error) return reply(Boom.badGateway(error))
 
-    return reply(items).code(200)
+    return reply(items)
   })
 }
 
 const addItem = (request, reply) => {
   Item.findOne({name: request.payload.name}, (error, item) => {
-    if (error) return reply(error).code(500)
+    if (error) return reply(Boom.badGateway(error))
 
-    if (item) return reply({error: 'Item already exists'}).code(400)
+    if (item) return reply(Boom.conflict('Item already exists'))
 
     item = new Item(request.payload)
     item.save(error => {
-      if (error) return reply({error: error.message}).code(400)
+      if (error) return reply(Boom.badGateway(error.message))
 
-      return reply(item).code(200)
+      return reply(item)
     })
   })
 }
 
 const updateItem = (request, reply) => {
   Item.findOne({_id: request.params.id}, (error, item) => {
-    if (error) return reply(error).code(500)
+    if (error) return reply(Boom.badGateway(error))
 
     const i = Object.assign(item, request.payload)
 
     i.save((error, doc) => {
-      if (error) return reply({error: error.message}).code(400)
+      if (error) return reply(Boom.badGateway(error.message))
 
-      return reply(doc).code(200)
+      return reply(doc)
     })
   })
 }
 
 const deleteItem = (request, reply) => {
   Item.findOne({_id: request.params.id}, (error, item) => {
-    if (error) return reply(error).code(500)
+    if (error) return reply(Boom.badGateway(error))
 
     item.remove(error => {
-      if (error) return reply({error: error.message}).code(400)
-      return reply({id: request.params.id}).code(200)
+      if (error) return reply(Boom.badGateway(error.message))
+      return reply({id: request.params.id})
     })
   })
 }

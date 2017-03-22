@@ -1,7 +1,7 @@
-const games = [{_id: '1', name: 'Do the ping'}, {_id: '2', name: 'Do the pong'}];
+import Games from '../../games/games'
 
 const getGameList = (request, reply) => {
-    return reply(games).code(200)
+  return reply(Games)
 }
 
 exports.register = (server, options, next) => {

@@ -3,10 +3,11 @@ import CookieAuth from 'hapi-auth-cookie'
 import Player from '../models/player'
 import {authValidationSchema} from '../../validators/auth'
 import {setPlayer} from '../helpers/authHelper';
+import Boom from 'boom';
 
 const login = (request, reply) => {
   if (!request.payload.email || !request.payload.password) {
-    return reply({message: 'Missing email or password'}).code(417)
+    return reply(Boom.expectationFailed('Missing email or password'))
   }
 
   //admin
@@ -23,18 +24,18 @@ const login = (request, reply) => {
       scope: 'admin'
     });
 
-    reply({email}).code(200)
+    reply({email})
   } else {
     const validatedPayload = authValidationSchema.validate(request.payload)
     if (validatedPayload.error) {
-      return reply({error: validatedPayload.error}).code(401);
+      return reply(Boom.unauthorized(validatedPayload.error))
     }
 
     const {email, password} = validatedPayload.value;
 
     Player.findOne({email: email, password: password}, (error, player) => {
       if (error) {
-        return reply({message: 'Wrong email or password'}).code(417)
+        return reply(Boom.expectationFailed('Wrong email or password'))
       }
 
       setPlayer({
@@ -45,7 +46,7 @@ const login = (request, reply) => {
         scope: 'player'
       });
 
-      reply({email}).code(200)
+      reply({email})
     });
   }
 }

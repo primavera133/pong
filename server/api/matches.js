@@ -1,6 +1,7 @@
 import Match from '../models/match'
 import {idValidationSchema} from '../../validators/basic';
 import {matchValidationSchema, matchStartValidationSchema} from '../../validators/match';
+import Boom from 'boom';
 
 const getMatchList = (request, reply) => {
   const query = {
@@ -13,24 +14,24 @@ const getMatchList = (request, reply) => {
     ]
   };
   Match.find(query, (error, matches) => {
-    if (error) return reply(error).code(500)
+    if (error) return reply(Boom.badGateway(error))
 
-    return reply(matches).code(200)
+    return reply(matches)
   })
 }
 
 const getMatch = (request, reply) => {
   Match.findById(request.params.matchId, (error, items) => {
-    if (error) return reply(error).code(500)
+    if (error) return reply(Boom.badGateway(error))
 
-    return reply(items).code(200)
+    return reply(items)
   })
 }
 
 const addMatch = (request, reply) => {
   const validatedPayload = matchStartValidationSchema.validate(request.payload)
   if (validatedPayload.error) {
-    return reply().redirect(error).code(500);
+    return reply(Boom.badData(validatedPayload.error));
   }
 
   const match = new Match({
@@ -50,26 +51,26 @@ const addMatch = (request, reply) => {
   })
 
   match.save(error => {
-    if (error) return reply({error: error.message}).code(400)
+    if (error) return reply(Boom.badGateway(error.message))
 
-    return reply(match).code(200)
+    return reply(match)
   })
 }
 
 const updateMatch = (request, reply) => {
   Match.findOne({_id: request.params.id}, (error, match) => {
-    if (error) return reply(error).code(500)
+    if (error) return reply(Boom.badGateway(error))
 
     const validatedPayload = matchValidationSchema.validate(request.payload)
     if (validatedPayload.error) {
-      return reply().redirect(error).code(500);
+      return reply(Boom.badData(error));
     }
 
     const i = Object.assign(match, validatedPayload.value)
     i.save((error, doc) => {
-      if (error) return reply({error: error.message}).code(400)
+      if (error) return reply(Boom.badGateway(error.message))
 
-      return reply(doc).code(200)
+      return reply(doc)
     })
   })
 }

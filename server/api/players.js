@@ -2,20 +2,21 @@ import Player from '../models/player'
 import {idValidationSchema, nameValidationSchema} from '../../validators/basic';
 import {playerValidationSchema} from '../../validators/player';
 import {setPlayer} from '../helpers/authHelper';
+import Boom from 'boom';
 
 const getPlayer = (request, reply) => {
   Player.findById(request.params.id, (error, items) => {
-    if (error) return reply(error).code(500)
+    if (error) return reply(Boom.badGateway(error))
 
-    return reply(items).code(200)
+    return reply(items)
   })
 }
 
 const getPlayerFriends = (request, reply) => {
   Player.find({_id: request.auth.credentials._id}, {friends: true}, (error, players) => {
-    if (error || !players.length) return reply(error).code(500)
+    if (error || !players.length) return reply(Boom.badGateway(error))
 
-    return reply(players[0].friends).code(200)
+    return reply(players[0].friends)
   })
 }
 
@@ -24,16 +25,16 @@ const findPlayerByName = (request, reply) => {
   const limiter = {_id: true, name: true}
 
   Player.find(query, limiter, (error, players) => {
-    if (error) return reply(error).code(500)
+    if (error) return reply(Boom.badGateway(error))
 
-    return reply(players).code(200)
+    return reply(players)
   })
 }
 
 const signUpPlayer = (request, reply) => {
   const validatedPayload = playerValidationSchema.validate(request.payload)
   if (validatedPayload.error) {
-    return reply().redirect(error).code(500);
+    return reply().redirect(Boom.badData(error));
   }
   const player = new Player(validatedPayload.value)
   player.save((error, player) => {
@@ -43,22 +44,22 @@ const signUpPlayer = (request, reply) => {
         const query = {$or: [{name: validatedPayload.value.name}, {email: validatedPayload.value.email}]};
         return Player.find(query, (findError, players) => {
           if (findError) {
-            return reply().redirect(findError).code(500);
+            return reply().redirect(Boom.badGateway(findError))
           }
           if (players) {
             for (let player of players) {
               if (player.name === validatedPayload.value.name) {
-                return reply({error: error.message, code: error.code, field: 'name'}).code(409)
+                return reply(Boom.conflict({error: error.message, code: error.code, field: 'name'}))
               }
               if (player.email === validatedPayload.value.email) {
-                return reply({error: error.message, code: error.code, field: 'email'}).code(409)
+                return reply(Boom.conflict({error: error.message, code: error.code, field: 'email'}))
               }
             }
           }
-          return reply({error: error.message, code: error.code}).code(400)
+          return reply(Boom.badGateway({error: error.message, code: error.code}))
         })
       }
-      return reply({error: error.message, code: error.code}).code(400)
+      return reply(Boom.badGateway({error: error.message, code: error.code}))
     }
 
     const {email} = validatedPayload.value;
@@ -71,24 +72,24 @@ const signUpPlayer = (request, reply) => {
       scope: 'player'
     })
 
-    return reply(player).code(200)
+    return reply(player)
   })
 }
 
 const updateMatch = (request, reply) => {
   Player.findOne({_id: request.params.id}, (error, match) => {
-    if (error) return reply(error).code(500)
+    if (error) return reply(Boom.badGateway(error))
 
     const validatedPayload = playerValidationSchema.validate(request.payload)
     if (validatedPayload.error) {
-      return reply().redirect(error).code(500);
+      return reply().redirect(Boom.badData(error));
     }
 
     const i = Object.assign(match, validatedPayload.value)
     i.save((error, doc) => {
-      if (error) return reply({error: error.message}).code(400)
+      if (error) return reply(Boom.badGateway(error.message))
 
-      return reply(doc).code(200)
+      return reply(doc)
     })
   })
 }

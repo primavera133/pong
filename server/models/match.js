@@ -14,7 +14,8 @@ const matchSchema = Schema({
   playerOne: {
     playerId: {
       type: Schema.Types.ObjectId,
-      required: true
+      required: true,
+      ref: 'Player'
     },
     name: {
       type: String
@@ -23,15 +24,24 @@ const matchSchema = Schema({
   playerTwo: {
     playerId: {
       type: Schema.Types.ObjectId,
-      required: false
+      required: false,
+      ref: 'Player'
     },
     name: {
       type: String
-    },
-    accepted: {
-      type: Boolean,
-      default: false
     }
+  },
+  turn: {
+    type: String,
+    enum: ['playerOne', 'playerTwo']
+  },
+  accepted: {
+    type: Boolean,
+    default: false
+  },
+  rejected: {
+    type: Boolean,
+    default: false
   }
 })
 

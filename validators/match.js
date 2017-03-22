@@ -23,17 +23,36 @@ export const matchStartValidationSchema = Joi.object().keys({
 });
 
 export const matchValidationSchema = Joi.object().keys({
-  game: Joi
-    .string()
-    .required(),
-  playerOne: Joi
-    .string()
-    .required()
-    .regex(/^[0-9a-fA-F]{24}$/),
-  playerTwo: Joi
-    .string()
-    .optional()
-    .regex(/^[0-9a-fA-F]{24}$/),
+  game: {
+    gameId: Joi
+      .string()
+      .required(),
+    name: Joi
+      .string()
+      .required()
+  },
+  playerOne: {
+    playerId: Joi
+      .string()
+      .required(),
+    name: Joi
+      .string()
+      .required(),
+  },
+  playerTwo: {
+    playerId: Joi
+      .string()
+      .required(),
+    name: Joi
+      .string()
+      .required(),
+  },
+  turn: Joi
+    .string(),
+  accepted: Joi
+    .boolean(),
+  rejected: Joi
+    .boolean()
 }).options({
   stripUnknown: true,
   allowUnknown: true

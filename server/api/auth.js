@@ -32,7 +32,6 @@ const login = (request, reply) => {
     }
 
     const {email, password} = validatedPayload.value;
-
     Player.findOne({email: email, password: password}, (error, player) => {
       if (error) {
         return reply(Boom.expectationFailed('Wrong email or password'))

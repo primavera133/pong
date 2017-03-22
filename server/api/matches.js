@@ -15,7 +15,6 @@ const getMatchList = (request, reply) => {
   };
   Match.find(query, (error, matches) => {
     if (error) return reply(Boom.badGateway(error))
-
     return reply(matches)
   })
 }
@@ -62,6 +61,7 @@ const updateMatch = (request, reply) => {
     if (error) return reply(Boom.badGateway(error))
 
     const validatedPayload = matchValidationSchema.validate(request.payload)
+
     if (validatedPayload.error) {
       return reply(Boom.badData(error));
     }
@@ -109,7 +109,7 @@ exports.register = (server, options, next) => {
 
     {
       method: 'PUT',
-      path: '/api/matches/{matchId}',
+      path: '/api/matches/{id}',
       config: {
         handler: updateMatch,
         auth: 'session',

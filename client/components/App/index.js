@@ -13,9 +13,6 @@ export class App extends Component {
       <div>
         <LimitUser scope="*">
           <div>
-            <LimitUser scope={['player']}>
-              <p>PLAYER!</p>
-            </LimitUser>
             <LimitUser scope={['admin']}>
               <p>ADMIN!</p>
             </LimitUser>

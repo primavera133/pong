@@ -32,7 +32,7 @@ export class Authenticate extends FormComponent {
 
     this.props.validate((error) => {
       if (!error) {
-        this.props.dispatch(signIn(this.state, '/list'))
+        this.props.dispatch(signIn(this.state, '/matches'))
       }
     });
   }

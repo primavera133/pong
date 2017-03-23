@@ -10,8 +10,6 @@ import App from './components/App'
 import SignUp from './components/SignUp'
 import MatchList from './components/MatchList'
 import MatchStart from './components/MatchStart'
-import List from './components/List'
-import Create from './components/Create'
 import Authenticate from './components/Authenticate'
 
 import { requireAuth, updateHealthCenter, updateCorporation, updateUser, updateEncounter } from './routes';
@@ -21,13 +19,10 @@ render((
     <I18nextProvider i18n={i18n}>
     <Router history={browserHistory}>
       <Route path="/" component={App}>
-        <IndexRedirect to='/list'/>
-
+        <IndexRedirect to='/matches'/>
         <Route path="/signup" component={SignUp} onEnter={requireAuth}/>
         <Route path="/matches" component={MatchList} onEnter={requireAuth}/>
         <Route path="/startmatch" component={MatchStart} onEnter={requireAuth}/>
-        <Route path="/list" component={List} onEnter={requireAuth}/>
-        <Route path="/create" component={Create} onEnter={requireAuth}/>
         <Route path='/login' component={Authenticate} onEnter={requireAuth}/>
       </Route>
     </Router>

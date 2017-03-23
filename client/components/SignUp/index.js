@@ -38,7 +38,7 @@ export class SignUp extends FormComponent {
         console.error(error)
       }
       if (!error) {
-        this.props.dispatch(signUp(this.state, '/list'))
+        this.props.dispatch(signUp(this.state, '/matches'))
       }
     });
   }

@@ -20,10 +20,10 @@ const getMatchList = (request, reply) => {
 }
 
 const getMatch = (request, reply) => {
-  Match.findById(request.params.matchId, (error, items) => {
+  Match.findById(request.params.matchId, (error, matches) => {
     if (error) return reply(Boom.badGateway(error))
 
-    return reply(items)
+    return reply(matches)
   })
 }
 
@@ -56,19 +56,63 @@ const addMatch = (request, reply) => {
   })
 }
 
-const updateMatch = (request, reply) => {
+const updateMatch = (match, request, reply) => {
   Match.findOne({_id: request.params.id}, (error, match) => {
     if (error) return reply(Boom.badGateway(error))
 
     const validatedPayload = matchValidationSchema.validate(request.payload)
-
     if (validatedPayload.error) {
       return reply(Boom.badData(error));
     }
 
     const i = Object.assign(match, validatedPayload.value)
+    console.log(i)
     i.save((error, doc) => {
-      if (error) return reply(Boom.badGateway(error.message))
+      if (error) {
+        console.log('error', error)
+        return reply(Boom.badGateway(error.message))
+      }
+
+      return reply(doc)
+    })
+  })
+}
+
+const cancelMatch = (request, reply) => {
+  const matchId = request.params.id;
+  const query = {_id: matchId, 'playerTwo.playerId': request.auth.credentials._id};
+
+  Match.findOne(query, (error, match) => {
+    if (error) return reply(Boom.badGateway(error))
+    if (match === null) return reply(Boom.notFound(error))
+
+    const _match = Object.assign(match, {rejected: true})
+    _match.save((error, doc) => {
+      if (error) {
+        return reply(Boom.badGateway(error.message))
+      }
+
+      return reply(doc)
+    })
+  })
+}
+
+const acceptMatch = (request, reply) => {
+  const matchId = request.params.id;
+  const query = {_id: matchId, 'playerTwo.playerId': request.auth.credentials._id};
+
+  Match.findOne(query, (error, match) => {
+    if (error) return reply(Boom.badGateway(error))
+    if (match === null) return reply(Boom.notFound(error))
+
+    const turn = Math.random() < 0.5 ? 'playerOne' : 'playerTwo';
+
+    const _match = Object.assign(match, {accepted: true, turn: turn})
+    _match.save((error, doc) => {
+      if (error) {
+        console.log('error', error)
+        return reply(Boom.badGateway(error.message))
+      }
 
       return reply(doc)
     })
@@ -109,9 +153,21 @@ exports.register = (server, options, next) => {
 
     {
       method: 'PUT',
-      path: '/api/matches/{id}',
+      path: '/api/matches/{id}/cancel',
       config: {
-        handler: updateMatch,
+        handler: cancelMatch,
+        auth: 'session',
+        validate: {
+          params: idValidationSchema
+        }
+      }
+    },
+
+    {
+      method: 'PUT',
+      path: '/api/matches/{id}/accept',
+      config: {
+        handler: acceptMatch,
         auth: 'session',
         validate: {
           params: idValidationSchema

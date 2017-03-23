@@ -5,7 +5,6 @@ import alert from './alert'
 import friends from './friends'
 import matches from './matches'
 import games from './games'
-import items from './items'
 
 export default combineReducers({
   auth,
@@ -13,6 +12,5 @@ export default combineReducers({
   alert,
   friends,
   matches,
-  games,
-  items
+  games
 })

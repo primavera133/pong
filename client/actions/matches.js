@@ -35,14 +35,11 @@ export const chooseOpponent = (opponent) => (dispatch) => {
 }
 
 export const cancelMatch = (match) => (dispatch) => {
-  match.accepted = false;
-  match.rejected = true;
-console.log()
   return request
-    .put(`/api/matches/${match._id}`, match)
+    .put(`/api/matches/${match._id}/cancel`, {})
     .then(({data}) => {
       dispatch({
-        type: 'MATCH_CANCELED',
+        type: 'MATCH_UPDATED',
         payload: data
       })
     })
@@ -52,13 +49,17 @@ console.log()
 }
 
 export const acceptMatch = (match) => (dispatch) => {
-  match.accepted = true;
-  match.rejected = false;
-
   return request
-    .put(`/api/matches/${match._id}`, match)
+    .put(`/api/matches/${match._id}/accept`, {})
     .then(({data}) => {
-      dispatch(routeActions.push(`/match/${match._id}`))
+      if (data.turn === 'playerOne') {
+        dispatch({
+          type: 'MATCH_UPDATED',
+          payload: data
+        })
+      } else {
+        dispatch(routeActions.push(`/match/${match._id}`))
+      }
     })
     .catch((error) => {
       dispatch(httpError(error))

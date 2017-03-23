@@ -13,18 +13,15 @@ export default handleActions({
     }
   },
 
-  MATCH_CANCELED: (state, action) => {
-    /*
-     const matches = state.list.map(match => {
-     if (match._id === action.payload._id) {
-     return action.payload
-     }
-     return match
-     })
-
-     */
-    state.list[state.list.findIndex(match => match._id === action.match._id)] = action.payload
-    return state
+  MATCH_UPDATED: (state, action) => {
+    return Object.assign({}, state, {
+      list: state.list.map((match, index) => {
+        if (match._id === action.payload._id) {
+          return Object.assign({}, action.payload)
+        }
+        return match
+      })
+    })
   }
 }, {
   list: [],

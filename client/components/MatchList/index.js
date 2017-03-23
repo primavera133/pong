@@ -17,7 +17,7 @@ export class MatchList extends Component {
     this.handlePlayersTurn = this.handlePlayersTurn.bind(this)
   }
 
-  handleInvitation (match) {
+  handleInvitation(match) {
     Dialog.setOptions({
       defaultOkLabel: 'Kör!',
       defaultCancelLabel: 'Nej, tack'
@@ -37,7 +37,8 @@ export class MatchList extends Component {
     //this.props.dispatch((match)
   }
 
-  handlePlayersTurn () {}
+  handlePlayersTurn() {
+  }
 
   render() {
     const {auth} = this.props

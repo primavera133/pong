@@ -5,10 +5,10 @@ import {setPlayer} from '../helpers/authHelper';
 import Boom from 'boom';
 
 const getPlayer = (request, reply) => {
-  Player.findById(request.params.id, (error, items) => {
+  Player.findById(request.params.id, (error, players) => {
     if (error) return reply(Boom.badGateway(error))
 
-    return reply(items)
+    return reply(players)
   })
 }
 

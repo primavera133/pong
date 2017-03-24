@@ -43,6 +43,8 @@ const playerSchema = Schema({
       required: true
     },
   }]
+}, {
+  timestamps: true
 })
 
 export default mongoose.model('Player', playerSchema)

@@ -24,7 +24,7 @@ const findPlayerByName = (request, reply) => {
   const query = {$and: [{name: new RegExp(`.*${request.params.name}.*`, 'i')}, {name: {$ne: request.auth.credentials.name}}]}
   const limiter = {_id: true, name: true}
 
-  Player.find(query, limiter, (error, players) => {
+  Player.find(query).limit(10).exec(limiter, (error, players) => {
     if (error) return reply(Boom.badGateway(error))
 
     return reply(players)

@@ -2,6 +2,7 @@ import Match from '../models/match'
 import {idValidationSchema} from '../../validators/basic';
 import {matchValidationSchema, matchStartValidationSchema} from '../../validators/match';
 import Boom from 'boom';
+import moment from 'moment'
 
 const getMatchList = (request, reply) => {
   const query = {
@@ -11,7 +12,10 @@ const getMatchList = (request, reply) => {
       }, {
         'playerTwo.playerId': request.auth.credentials._id
       }
-    ]
+    ],
+    updatedAt: {
+      $gt: moment().subtract(1, 'week').toDate()
+    }
   };
   Match.find(query, (error, matches) => {
     if (error) return reply(Boom.badGateway(error))

@@ -1,6 +1,6 @@
 import Match from '../models/match'
-import {idValidationSchema} from '../../validators/basic';
-import {matchValidationSchema, matchStartValidationSchema} from '../../validators/match';
+import { idValidationSchema } from '../../validators/basic';
+import { matchValidationSchema, matchStartValidationSchema } from '../../validators/match';
 import Boom from 'boom';
 import moment from 'moment'
 
@@ -24,10 +24,11 @@ const getMatchList = (request, reply) => {
 }
 
 const getMatch = (request, reply) => {
-  Match.findById(request.params.matchId, (error, matches) => {
+  Match.findById(request.params.id, (error, match) => {
     if (error) return reply(Boom.badGateway(error))
+    if (match === null) return reply(Boom.notFound())
 
-    return reply(matches)
+    return reply(match)
   })
 }
 
@@ -61,7 +62,7 @@ const addMatch = (request, reply) => {
 }
 
 const updateMatch = (match, request, reply) => {
-  Match.findOne({_id: request.params.id}, (error, match) => {
+  Match.findOne({ _id: request.params.id }, (error, match) => {
     if (error) return reply(Boom.badGateway(error))
 
     const validatedPayload = matchValidationSchema.validate(request.payload)
@@ -84,13 +85,13 @@ const updateMatch = (match, request, reply) => {
 
 const cancelMatch = (request, reply) => {
   const matchId = request.params.id;
-  const query = {_id: matchId, 'playerTwo.playerId': request.auth.credentials._id};
+  const query = { _id: matchId, 'playerTwo.playerId': request.auth.credentials._id };
 
   Match.findOne(query, (error, match) => {
     if (error) return reply(Boom.badGateway(error))
     if (match === null) return reply(Boom.notFound(error))
 
-    const _match = Object.assign(match, {rejected: true})
+    const _match = Object.assign(match, { rejected: true })
     _match.save((error, doc) => {
       if (error) {
         return reply(Boom.badGateway(error.message))
@@ -103,7 +104,7 @@ const cancelMatch = (request, reply) => {
 
 const acceptMatch = (request, reply) => {
   const matchId = request.params.id;
-  const query = {_id: matchId, 'playerTwo.playerId': request.auth.credentials._id};
+  const query = { _id: matchId, 'playerTwo.playerId': request.auth.credentials._id };
 
   Match.findOne(query, (error, match) => {
     if (error) return reply(Boom.badGateway(error))
@@ -111,7 +112,7 @@ const acceptMatch = (request, reply) => {
 
     const turn = Math.random() < 0.5 ? 'playerOne' : 'playerTwo';
 
-    const _match = Object.assign(match, {accepted: true, turn: turn})
+    const _match = Object.assign(match, { accepted: true, turn: turn })
     _match.save((error, doc) => {
       if (error) {
         console.log('error', error)
@@ -136,7 +137,7 @@ exports.register = (server, options, next) => {
 
     {
       method: 'GET',
-      path: '/api/matches/{matchId}',
+      path: '/api/matches/{id}',
       config: {
         handler: getMatch,
         auth: 'session',

@@ -38,6 +38,7 @@ module.exports = {
         loaders: ['react-hot', 'babel'],
         include: [
           path.join(__dirname, '..', 'client'),
+          path.join(__dirname, '..', 'games'),
           path.join(__dirname, '..', 'validators')
         ]
       },

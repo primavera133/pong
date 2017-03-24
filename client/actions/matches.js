@@ -2,6 +2,19 @@ import * as request from 'axios';
 import {routeActions} from 'redux-simple-router'
 import {httpError} from './error';
 
+export const loadMatch = (id) => (dispatch) => {
+  return request
+    .get(`/api/matches/${id}`)
+    .then(({data}) => {
+      dispatch({
+        type: 'RECEIVE_MATCH',
+        payload: data
+      })
+    })
+    .catch((error) => {
+      dispatch(httpError(error))
+    })
+}
 export const loadMatchList = () => (dispatch) => {
   return request
     .get('/api/matches')

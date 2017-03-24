@@ -1,9 +1,9 @@
 export default [{
-  _id: "1",
+  _id: "111122223333444455556666",
   name: 'Kast med liten dvärgkrigare',
-  folder: 'dwarfThrow'
+  codeName: 'dwarfThrow'
 }, {
-  _id: "2",
+  _id: "222233334444555566667777",
   name: 'Lergökaspelet',
-  folder: 'birdcalls'
+  codeName: 'birdcalls'
 }]

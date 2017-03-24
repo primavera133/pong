@@ -22,9 +22,7 @@ export class MatchList extends Component {
           } else if (match.rejected) {
             return <s>{match.game.name}: {match.playerOne.name} vs {match.playerTwo.name}</s>
           } else {
-            return <a onClick={this.handleClick}>
-              {match.game.name}: {match.playerOne.name} vs {match.playerTwo.name}
-            </a>
+            return <Link to={`/match/${match._id}`}>{match.game.name}: {match.playerOne.name} vs {match.playerTwo.name}</Link>
           }
         })()}
       </li>

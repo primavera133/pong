@@ -8,6 +8,7 @@ import auth from './api/auth'
 import players from './api/players'
 import matches from './api/matches'
 import games from './api/games'
+import gameDwarfThrow from './games/DwarfThrow/api/gameDwarfThrow'
 
 mongoose.connect(config.get('database.host'))
 mongoose.connection.on('error', console.error.bind(console, 'db error:'))
@@ -65,6 +66,9 @@ server.register([
   },
   {
     register: players
+  },
+  {
+    register: gameDwarfThrow
   }
 ], (error) => {
   if (error) throw error

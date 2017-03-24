@@ -14,7 +14,6 @@ export class MatchList extends Component {
     this.props.dispatch(loadMatchList())
 
     this.handleInvitation = this.handleInvitation.bind(this)
-    this.handlePlayersTurn = this.handlePlayersTurn.bind(this)
   }
 
   handleInvitation(match) {
@@ -33,11 +32,6 @@ export class MatchList extends Component {
         })
       ]
     })
-
-    //this.props.dispatch((match)
-  }
-
-  handlePlayersTurn() {
   }
 
   render() {
@@ -64,7 +58,6 @@ export class MatchList extends Component {
                         <MatchItem
                           match={match}
                           key={idx}
-                          onMatchClick={this.handleInvitation}
                         />
                       )}
                     </ul>

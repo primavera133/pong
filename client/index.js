@@ -1,18 +1,19 @@
 import React from 'react'
-import {render} from 'react-dom'
-import {Provider} from 'react-redux'
-import {Router, Route, IndexRedirect, browserHistory} from 'react-router'
-import {I18nextProvider} from 'react-i18next';
+import { render } from 'react-dom'
+import { Provider } from 'react-redux'
+import { Router, Route, IndexRedirect, browserHistory } from 'react-router'
+import { I18nextProvider } from 'react-i18next';
 import i18n from './config/i18n';
 import store from './store';
 
 import App from './components/App'
 import SignUp from './components/SignUp'
+import Match from './components/Match'
 import MatchList from './components/MatchList'
 import MatchStart from './components/MatchStart'
 import Authenticate from './components/Authenticate'
 
-import {requireAuth, updateHealthCenter, updateCorporation, updateUser, updateEncounter} from './routes';
+import { requireAuth, updateMatch } from './routes';
 
 render((
   <Provider store={store}>
@@ -21,9 +22,15 @@ render((
         <Route path="/" component={App}>
           <IndexRedirect to='/matches'/>
           <Route path="/signup" component={SignUp} onEnter={requireAuth}/>
-          <Route path="/matches" component={MatchList} onEnter={requireAuth}/>
-          <Route path="/startmatch" component={MatchStart} onEnter={requireAuth}/>
           <Route path='/login' component={Authenticate} onEnter={requireAuth}/>
+          <Route path="/startmatch" component={MatchStart} onEnter={requireAuth}/>
+          <Route path="/matches" component={MatchList} onEnter={requireAuth}/>
+          <Route
+            path="/match/:id"
+            component={Match}
+            onEnter={updateMatch}/>
+          />
+
         </Route>
       </Router>
     </I18nextProvider>

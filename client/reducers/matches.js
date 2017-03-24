@@ -1,6 +1,10 @@
 import {handleActions} from 'redux-actions';
 
 export default handleActions({
+  RECEIVE_MATCH: (state, action) => ({
+    ...state,
+    match: action.payload
+  }),
   RECEIVE_MATCHES: (state, action) => ({
     ...state,
     list: action.payload

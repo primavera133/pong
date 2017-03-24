@@ -1,10 +1,11 @@
 import Joi from 'joi'
-import {matchValidationSchema} from './match'
+import { matchValidationSchema } from './match'
 
 export const playerValidationSchema = Joi.object().keys({
   name: Joi
     .string()
     .trim()
+    .invalid(['superadmin', 'admin'])
     .required(),
   password: Joi
     .string()

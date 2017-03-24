@@ -6,7 +6,6 @@ export const signUp = (payload, path) => (dispatch) => {
   return request
     .post('/api/players', payload)
     .then(({data}) => {
-    	console.log(1111, data)
       dispatch(routeActions.push(path))
     })
     .catch((error) => {

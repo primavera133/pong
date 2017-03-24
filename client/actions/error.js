@@ -30,11 +30,11 @@ export const httpError = (error) => (dispatch) => {
 
     if (error.response.status === 409) {
       if (error.response) {
-        if (error.response.data.code === 11000) {
-          if(error.response.data.field ==='name'){
+        if (error.response.data.dbCode === 11000) {
+          if(error.response.data.dbField ==='name'){
             return dispatch(showDanger(t('danger.keyConflict.username')));
           }
-          if(error.response.data.field ==='email'){
+          if(error.response.data.dbField ==='email'){
             return dispatch(showDanger(t('danger.keyConflict.email')));
           }
         }

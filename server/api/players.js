@@ -49,10 +49,16 @@ const signUpPlayer = (request, reply) => {
           if (players) {
             for (let player of players) {
               if (player.name === validatedPayload.value.name) {
-                return reply(Boom.conflict({error: error.message, code: error.code, field: 'name'}))
+                let err = Boom.conflict(error.message)
+                err.output.payload.dbCode = error.code
+                err.output.payload.dbField = 'name'
+                return reply(err)
               }
               if (player.email === validatedPayload.value.email) {
-                return reply(Boom.conflict({error: error.message, code: error.code, field: 'email'}))
+								let err = Boom.conflict(error.message)
+								err.output.payload.dbCode = error.code
+								err.output.payload.dbField = 'email'
+								return reply(err)
               }
             }
           }

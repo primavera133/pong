@@ -15,17 +15,3 @@ export const loadGames = () => (dispatch) => {
       dispatch(httpError(error))
     });
 }
-
-export const loadGame = (id) => (dispatch) => {
-  return request
-    .get(`/api/games/${id}`)
-    .then(({data}) => {
-      dispatch({
-        type: 'RECEIVE_GAME',
-        payload: data
-      })
-    })
-    .catch((error) => {
-      dispatch(httpError(error))
-    });
-}

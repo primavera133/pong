@@ -1,10 +1,9 @@
-import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
-import { loadGame } from '../../actions/games'
-import DwarfMatch from '../../../games/DwarfThrow/components/DwarfMatch'
+import React, {Component, PropTypes} from 'react'
+import {connect} from 'react-redux'
+import DwarfMatch from '../../games/DwarfThrow/components/DwarfMatch'
 
 export class Match extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.state = {
@@ -12,22 +11,28 @@ export class Match extends Component {
     }
   }
 
-  componentWillMount () {
-    this.setState({ isPlayersTurn: (this.props.match[this.props.match.turn].playerId === this.props.auth._id) })
-    this.props.dispatch(loadGame(this.props.match.game.gameId))
+  componentWillMount() {
+    this.setState({isPlayersTurn: (this.props.match[this.props.match.turn].playerId === this.props.auth._id)})
   }
 
-  render () {
-    const { match, auth } = this.props
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.match) {
+      this.setState({isPlayersTurn: (nextProps.match[nextProps.match.turn].playerId === this.props.auth._id)})
+    }
+  }
+
+  render() {
+    const {match, auth} = this.props
 
     return (
-      <div>
+      <div id="matchWrapper">
         {(() => {
-          console.log(111, this.state.isPlayersTurn)
-
-          //console.log(this.props.game)
-          if (this.props.game.codeName == 'dwarfThrow') {
-            return <DwarfMatch match={match} auth={auth}/>
+          if (match.game.codeName == 'dwarfThrow') {
+            return <DwarfMatch
+              match={match}
+              auth={auth}
+              isPlayersTurn={this.state.isPlayersTurn}
+            />
           }
         })()}
 
@@ -36,9 +41,8 @@ export class Match extends Component {
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
-    game: state.games.game,
     auth: state.auth,
     match: state.matches.match
   }

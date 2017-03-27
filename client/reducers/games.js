@@ -5,13 +5,6 @@ export default handleActions({
     ...state,
     list: action.payload
   }),
-  RECEIVE_GAME: (state, action) => {
-    console.log(action)
-    return ({
-      ...state,
-      game: action.payload
-    })
-  },
 }, {
   list: [],
   game: {}

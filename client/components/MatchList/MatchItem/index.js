@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react'
-import {Link} from 'react-router'
 
 export class MatchList extends Component {
   constructor(props) {
@@ -22,7 +21,9 @@ export class MatchList extends Component {
           } else if (match.rejected) {
             return <s>{match.game.name}: {match.playerOne.name} vs {match.playerTwo.name}</s>
           } else {
-            return <Link to={`/match/${match._id}`}>{match.game.name}: {match.playerOne.name} vs {match.playerTwo.name}</Link>
+            return <a onClick={this.handleClick}>
+              {match.game.name}: {match.playerOne.name} vs {match.playerTwo.name}
+            </a>
           }
         })()}
       </li>

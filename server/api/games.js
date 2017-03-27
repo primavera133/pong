@@ -1,4 +1,4 @@
-import Games from '../../games/games'
+import Games from '../games/games'
 import { idValidationSchema } from '../../validators/basic';
 import Boom from 'boom';
 

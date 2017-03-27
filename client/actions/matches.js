@@ -77,5 +77,15 @@ export const acceptMatch = (match) => (dispatch) => {
     .catch((error) => {
       dispatch(httpError(error))
     })
+}
 
+export const matchTurn = (action) => (dispatch) => {
+  return request
+    .put(`/api/matches/${action.matchId}/turn`, action)
+    .then(({data}) => {
+      dispatch({
+        type: 'RECEIVE_MATCH',
+        payload: data
+      })
+    })
 }

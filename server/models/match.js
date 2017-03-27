@@ -6,6 +6,10 @@ const matchSchema = Schema({
       type: String,
       required: true
     },
+    codeName: {
+      type: String,
+      required: true
+    },
     name: {
       type: String,
       required: true
@@ -34,6 +38,9 @@ const matchSchema = Schema({
   turn: {
     type: String,
     enum: ['playerOne', 'playerTwo']
+  },
+  gameState: {
+    type: Object
   },
   accepted: {
     type: Boolean,

@@ -12,9 +12,6 @@ export const matchStartValidationSchema = Joi.object().keys({
   game: {
     _id: Joi
       .string()
-      .required(),
-    name: Joi
-      .string()
       .required()
   }
 }).options({
@@ -52,7 +49,8 @@ export const matchValidationSchema = Joi.object().keys({
   accepted: Joi
     .boolean(),
   rejected: Joi
-    .boolean()
+    .boolean(),
+  gameState: Joi.object()
 }).options({
   stripUnknown: true,
   allowUnknown: true

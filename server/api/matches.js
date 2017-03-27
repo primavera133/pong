@@ -1,6 +1,7 @@
 import Match from '../models/match'
-import { idValidationSchema } from '../../validators/basic';
-import { matchValidationSchema, matchStartValidationSchema } from '../../validators/match';
+import Games from '../games/games'
+import {idValidationSchema} from '../../validators/basic';
+import {matchValidationSchema, matchStartValidationSchema} from '../../validators/match';
 import Boom from 'boom';
 import moment from 'moment'
 
@@ -27,7 +28,6 @@ const getMatch = (request, reply) => {
   Match.findById(request.params.id, (error, match) => {
     if (error) return reply(Boom.badGateway(error))
     if (match === null) return reply(Boom.notFound())
-
     return reply(match)
   })
 }
@@ -37,6 +37,9 @@ const addMatch = (request, reply) => {
   if (validatedPayload.error) {
     return reply(Boom.badData(validatedPayload.error));
   }
+
+  const game = Games.find((game => game._id === validatedPayload.value.game._id))
+  if (!game) return reply(Boom.notFound())
 
   const match = new Match({
     playerOne: {
@@ -49,49 +52,28 @@ const addMatch = (request, reply) => {
       accepted: false
     },
     game: {
-      gameId: validatedPayload.value.game._id,
-      name: validatedPayload.value.game.name
-    }
+      gameId: game._id,
+      codeName: game.codeName,
+      name: game.name
+    },
+    gameState: game.initialState
   })
 
   match.save(error => {
     if (error) return reply(Boom.badGateway(error.message))
-
     return reply(match)
-  })
-}
-
-const updateMatch = (match, request, reply) => {
-  Match.findOne({ _id: request.params.id }, (error, match) => {
-    if (error) return reply(Boom.badGateway(error))
-
-    const validatedPayload = matchValidationSchema.validate(request.payload)
-    if (validatedPayload.error) {
-      return reply(Boom.badData(error));
-    }
-
-    const i = Object.assign(match, validatedPayload.value)
-    console.log(i)
-    i.save((error, doc) => {
-      if (error) {
-        console.log('error', error)
-        return reply(Boom.badGateway(error.message))
-      }
-
-      return reply(doc)
-    })
   })
 }
 
 const cancelMatch = (request, reply) => {
   const matchId = request.params.id;
-  const query = { _id: matchId, 'playerTwo.playerId': request.auth.credentials._id };
+  const query = {_id: matchId, 'playerTwo.playerId': request.auth.credentials._id};
 
   Match.findOne(query, (error, match) => {
     if (error) return reply(Boom.badGateway(error))
     if (match === null) return reply(Boom.notFound(error))
 
-    const _match = Object.assign(match, { rejected: true })
+    const _match = Object.assign(match, {rejected: true})
     _match.save((error, doc) => {
       if (error) {
         return reply(Boom.badGateway(error.message))
@@ -104,23 +86,55 @@ const cancelMatch = (request, reply) => {
 
 const acceptMatch = (request, reply) => {
   const matchId = request.params.id;
-  const query = { _id: matchId, 'playerTwo.playerId': request.auth.credentials._id };
+  const query = {_id: matchId, 'playerTwo.playerId': request.auth.credentials._id};
 
   Match.findOne(query, (error, match) => {
     if (error) return reply(Boom.badGateway(error))
     if (match === null) return reply(Boom.notFound(error))
 
-    const turn = Math.random() < 0.5 ? 'playerOne' : 'playerTwo';
+    const accepted = true
+    const turn = Math.random() < 0.5 ? 'playerOne' : 'playerTwo'
 
-    const _match = Object.assign(match, { accepted: true, turn: turn })
-    _match.save((error, doc) => {
+    const _match = Object.assign(match, {accepted, turn})
+    _match.save((error, savedMatch) => {
       if (error) {
-        console.log('error', error)
         return reply(Boom.badGateway(error.message))
       }
 
-      return reply(doc)
+      return reply(savedMatch)
     })
+  })
+}
+
+const turnMatch = (request, reply) => {
+  const matchId = request.params.id;
+  const action = request.payload;
+
+  Match.findById(matchId, (error, match) => {
+    if (error) return reply(Boom.badGateway(error))
+    if (match === null) return reply(Boom.notFound(error))
+
+    const turn = match.turn !== 'playerOne' ? 'playerOne' : 'playerTwo';
+
+    let gameState = {};
+
+    if (match.game.codeName === 'dwarfThrow') {
+      //TODO: validate game payload
+      const validatedDwarfThrowPayload = action
+      // TODO: jack in games state engine here
+      if (validatedDwarfThrowPayload.throw) {
+        gameState = {dwarvesThrown: match.gameState.dwarvesThrown + 1};
+      }
+    }
+
+    Object.assign(match, {gameState, turn})
+      .save((error, savedMatch) => {
+        if (error) {
+          return reply(Boom.badGateway(error.message))
+        }
+
+        return reply(savedMatch)
+      })
   })
 }
 
@@ -173,6 +187,18 @@ exports.register = (server, options, next) => {
       path: '/api/matches/{id}/accept',
       config: {
         handler: acceptMatch,
+        auth: 'session',
+        validate: {
+          params: idValidationSchema
+        }
+      }
+    },
+
+    {
+      method: 'PUT',
+      path: '/api/matches/{id}/turn',
+      config: {
+        handler: turnMatch,
         auth: 'session',
         validate: {
           params: idValidationSchema

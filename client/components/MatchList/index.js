@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router'
+import {Link, browserHistory} from 'react-router'
 import {loadMatchList, cancelMatch, acceptMatch} from '../../actions/matches'
 import MatchItem from './MatchItem';
 import Dialog from 'react-bootstrap-dialog'
@@ -14,6 +14,7 @@ export class MatchList extends Component {
     this.props.dispatch(loadMatchList())
 
     this.handleInvitation = this.handleInvitation.bind(this)
+    this.handlePlayersTurn = this.handlePlayersTurn.bind(this)
   }
 
   handleInvitation(match) {
@@ -32,6 +33,10 @@ export class MatchList extends Component {
         })
       ]
     })
+  }
+
+  handlePlayersTurn(match) {
+    browserHistory.push(`/match/${match._id}`);
   }
 
   render() {
@@ -58,6 +63,7 @@ export class MatchList extends Component {
                         <MatchItem
                           match={match}
                           key={idx}
+                          onMatchClick={this.handleInvitation}
                         />
                       )}
                     </ul>

@@ -4,7 +4,15 @@ import { syncHistory } from 'redux-simple-router';
 import thunkMiddleware from 'redux-thunk';
 import reducers from '../reducers';
 
-const reduxRouterMiddleware = syncHistory(browserHistory);
-const createStoreWithMiddleware = applyMiddleware(reduxRouterMiddleware, thunkMiddleware)(createStore);
+import createSocketIoMiddleware from 'redux-socket.io';
+import io from 'socket.io-client';
+let socket = io('http://localhost:8000');
+let socketIoMiddleware = createSocketIoMiddleware(socket, "server/");
 
-export default createStoreWithMiddleware(reducers);
+const reduxRouterMiddleware = syncHistory(browserHistory);
+const createStoreWithMiddleware = applyMiddleware(reduxRouterMiddleware, thunkMiddleware, socketIoMiddleware)(createStore);
+const store = createStoreWithMiddleware(reducers)
+
+store.dispatch({type:'server/hello', data:'Hello Socket!'});
+
+export default store;

@@ -27,6 +27,18 @@ server.connection({
   port: process.env.PORT || 8000
 })
 
+const io = require('socket.io')(server.listener);
+io.on('connection', (socket) => {
+  // console.log("Socket connected: " + socket.id);
+
+  socket.on('action', (action) => {
+    if(action.type === 'server/hello'){
+      console.log('Got hello data!', action.data);
+      socket.emit('action', {type:'RECEIVE_IO', data:'good day! ' + action.data});
+    }
+  });
+});
+
 if (process.env.NODE_ENV === 'development') {
   const webpack = require('webpack')
   const WebpackPlugin = require('hapi-webpack-plugin')

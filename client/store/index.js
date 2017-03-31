@@ -13,6 +13,6 @@ const reduxRouterMiddleware = syncHistory(browserHistory);
 const createStoreWithMiddleware = applyMiddleware(reduxRouterMiddleware, thunkMiddleware, socketIoMiddleware)(createStore);
 const store = createStoreWithMiddleware(reducers)
 
-store.dispatch({type:'server/hello', data:'Hello Socket!'});
+//store.dispatch({type:'server/hello', data:'Hello Socket!'});
 
 export default store;

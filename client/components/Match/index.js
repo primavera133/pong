@@ -1,5 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
+import {Button} from 'react-bootstrap'
+import {loadMatch} from '../../actions/matches'
 import DwarfMatch from '../../games/DwarfThrow/components/DwarfMatch'
 
 export class Match extends Component {
@@ -12,12 +14,23 @@ export class Match extends Component {
   }
 
   componentWillMount() {
+    this.props.dispatch({type: 'server/room/join', data: {room: this.props.match._id, player: this.props.auth._id}});
     this.setState({isPlayersTurn: (this.props.match[this.props.match.turn].playerId === this.props.auth._id)})
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.match) {
       this.setState({isPlayersTurn: (nextProps.match[nextProps.match.turn].playerId === this.props.auth._id)})
+    }
+
+    if (nextProps.action) {
+      if (nextProps.action._id !== this.props.action._id) {
+        switch (nextProps.action.command) {
+          case 'update':
+            nextProps.dispatch(loadMatch(nextProps.match._id))
+            break
+        }
+      }
     }
   }
 
@@ -35,7 +48,6 @@ export class Match extends Component {
             />
           }
         })()}
-
       </div>
     )
   }
@@ -44,7 +56,8 @@ export class Match extends Component {
 function mapStateToProps(state) {
   return {
     auth: state.auth,
-    match: state.matches.match
+    match: state.matches.match,
+    action: state.socketio.action
   }
 }
 

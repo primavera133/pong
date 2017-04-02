@@ -1,6 +1,7 @@
 import * as request from 'axios';
 import {routeActions} from 'redux-simple-router'
 import {httpError} from './error';
+import uuid from 'uuid'
 
 export const loadMatch = (id) => (dispatch) => {
   return request
@@ -83,6 +84,7 @@ export const matchTurn = (action) => (dispatch) => {
   return request
     .put(`/api/matches/${action.matchId}/turn`, action)
     .then(({data}) => {
+      dispatch({type: 'server/room/broadcast', data: {_id: uuid.v4(), room: action.matchId, command: 'update'}})
       dispatch({
         type: 'RECEIVE_MATCH',
         payload: data

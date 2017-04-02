@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
 import FormComponent from '../FormComponent'
 import {connect} from 'react-redux'
 import {translate} from 'react-i18next'
@@ -16,7 +16,7 @@ export class MatchList extends FormComponent {
 
     return (
       <div>
-        <h1>{t('header1')}</h1>
+        <h1 className="h3">{t('header1')}</h1>
         {(() => {
           if (!opponent) {
             return <div>

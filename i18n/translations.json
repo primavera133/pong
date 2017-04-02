@@ -1,7 +1,7 @@
 {
   "sv-SE": {
     "common": {
-      "appName": "pong"
+      "appName": "Pong"
     },
     "alerts": {
       "danger": {
@@ -26,6 +26,13 @@
       "confirm": {
       }
     },
+    "topNav": {
+      "matchlist":"Dina matcher",
+      "startmatch":"Ny match",
+      "about": "Om Pong",
+      "logout": "Logga ut",
+      "login": "Logga in"
+    },
     "authenticateView": {
       "loginHeader": "Logga in",
       "email": "E-mail",
@@ -37,8 +44,8 @@
       "name": "Ditt namn",
       "email": "Din epost",
       "password": "Önskat lösenord (minst 8 tecken)",
-      "passwordMatch": "upprepa lösenord",
-      "phone": "telefonnummer",
+      "passwordMatch": "Upprepa lösenord",
+      "phone": "Telefonnummer",
       "signUpSubmit": "Skapa ett konto",
       "loginLink": "Logga in"
     },
@@ -49,6 +56,31 @@
       "name": "Användarnamn",
       "headerSuggestions": "Förslag",
       "opponent": "Motståndare"
+    },
+    "matchListView": {
+      "header": "Matcher",
+      "startANewMatch": "Starta en ny match",
+      "noMatchesFound": "Inga matcher hittades men ",
+      "startAMatch": "starta en match!"
+    },
+    "invitationsReceived": {
+      "header": "Du är inbjuden"
+    },
+    "invitationsSent": {
+      "header": "Inbjudan skickad"
+    },
+    "yourTurn": {
+      "header": "Din tur"
+    },
+    "opponentsTurn": {
+      "header": "Motståndarens tur"
+    },
+    "games": {
+      "dwarfThrow": {
+        "throws": "Antal lyckade dvärgkrigarkast",
+        "throw": "Kasta dvärgkrigaren",
+        "notYourTurn": "Det är inte din tur"
+      }
     }
   },
   "en-US": {

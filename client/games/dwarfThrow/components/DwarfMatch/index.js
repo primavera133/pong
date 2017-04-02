@@ -1,6 +1,7 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import NotYourTurn from './NotYourTurn'
+import NotYourTurn from '../NotYourTurn'
+import {translate} from 'react-i18next'
 import {throwDwarf} from '../../actions/game'
 
 export class DwarfMatch extends Component {
@@ -15,19 +16,19 @@ export class DwarfMatch extends Component {
   }
 
   render() {
-    const {match} = this.props;
+    const {t, match} = this.props;
     return (
       <div>
-        <h1>{match.game.name}</h1>
-        <h2>{match.playerOne.name} vs {match.playerTwo.name}</h2>
+        <h1 className="h3">{match.game.name}</h1>
+        <h2 className="h4">{match.playerOne.name} vs {match.playerTwo.name}</h2>
         {(() => {
           if (!this.props.isPlayersTurn) {
             return <NotYourTurn/>
           } else {
             if (match)
               return <div>
-                <p>Antal lyckade dvärgkrigarkast {match.gameState.dwarvesThrown}</p>
-                <a className="btn btn-primary" onClick={this.handleClick}>Kasta dvärgkrigaren</a>
+                <p>{t('dwarfThrow.throws')} {match.gameState.dwarvesThrown}</p>
+                <a className="btn btn-primary" onClick={this.handleClick}>{t('dwarfThrow.throw')}</a>
               </div>
           }
         })()}
@@ -35,4 +36,4 @@ export class DwarfMatch extends Component {
   }
 }
 
-export default connect()(DwarfMatch)
+export default connect()(translate('games')(DwarfMatch))

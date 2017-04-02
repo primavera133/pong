@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
 import FormComponent from '../../FormComponent'
 import {connect} from 'react-redux'
 import {translate} from 'react-i18next'

@@ -1,7 +1,8 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
-import LimitUser from '../LimitUser';
-import Alert from '../Alert';
+import TopNav from './TopNav'
+import {Row, Col} from 'react-bootstrap'
+import Alert from '../Alert'
 
 export class App extends Component {
   constructor(props) {
@@ -10,15 +11,16 @@ export class App extends Component {
 
   render() {
     return (
-      <div>
-        <LimitUser scope="*">
-          <div>
-            <LimitUser scope={['admin']}>
-              <p>ADMIN!</p>
-            </LimitUser>
-          </div>
-        </LimitUser>
-        {this.props.children}
+      <div id="app">
+        <TopNav />
+
+        <div className="container">
+          <Row>
+            <Col md={4} mdOffset={4}>
+              {this.props.children}
+            </Col>
+          </Row>
+        </div>
         <Alert/>
       </div>
     )

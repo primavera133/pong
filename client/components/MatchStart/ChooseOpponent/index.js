@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
 import FormComponent from '../../FormComponent'
 import {connect} from 'react-redux'
 import validation from 'react-validation-mixin'
@@ -22,7 +22,7 @@ export class ChooseOpponent extends FormComponent {
     if (this.props.friends.length) {
       return (
         <div>
-          <h2>{t('headerFriendslist')}</h2>
+          <h2 className="h4">{t('headerFriendslist')}</h2>
           <ul>
             {this.props.friends.map(friend =>
               <Opponent key={friend._id} opponent={friend} />

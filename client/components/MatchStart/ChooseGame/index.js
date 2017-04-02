@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
 import {connect} from 'react-redux'
 import {translate} from 'react-i18next'
 import FormComponent from '../../FormComponent'
@@ -23,7 +23,7 @@ export class MatchList extends FormComponent {
         <ul>
           {(() => {
             return games.map((game, idx) => {
-              return <Game key={idx} game={game} opponent={opponent} />
+              return <Game key={idx} game={game} opponent={opponent}/>
             })
           })()}
         </ul>

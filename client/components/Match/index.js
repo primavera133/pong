@@ -1,6 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Button} from 'react-bootstrap'
 import {loadMatch} from '../../actions/matches'
 import DwarfMatch from '../../games/DwarfThrow/components/DwarfMatch'
 
@@ -38,7 +37,7 @@ export class Match extends Component {
     const {match, auth} = this.props
 
     return (
-      <div id="matchWrapper">
+      <div>
         {(() => {
           if (match.game.codeName == 'dwarfThrow') {
             return <DwarfMatch

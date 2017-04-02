@@ -30,7 +30,6 @@ render((
             component={Match}
             onEnter={updateMatch}/>
           />
-
         </Route>
       </Router>
     </I18nextProvider>

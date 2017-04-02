@@ -1,17 +1,17 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 import FormComponent from '../../FormComponent'
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
 import validation from 'react-validation-mixin'
-import { translate } from 'react-i18next'
+import {translate} from 'react-i18next'
 import strategy from 'joi-validation-strategy'
-import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
-import { findFriend } from '../../../actions/friends'
-import { startMatch } from '../../../actions/matches'
-import { playerFriendValidationSchema } from '../../../../validators/friends'
+import {FormGroup, FormControl, ControlLabel} from 'react-bootstrap'
+import {findFriend} from '../../../actions/friends'
+import {startMatch} from '../../../actions/matches'
+import {playerFriendValidationSchema} from '../../../../validators/friends'
 import Opponent from '../Opponent'
 
 export class ChooseOpponent extends FormComponent {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.state = {
@@ -25,21 +25,21 @@ export class ChooseOpponent extends FormComponent {
     this.chooseOpponent = this.chooseOpponent.bind(this);
   }
 
-  handleChange (event, field) {
+  handleChange(event, field) {
     const v = event.target.value;
-    this.setState({ [field]: v }, () => {
+    this.setState({[field]: v}, () => {
       if (v.length > 3) {
         this.handleSubmit()
       }
     });
   }
 
-  handleSubmit (event) {
+  handleSubmit(event) {
     if (event) event.preventDefault();
 
     this.props.validate((error) => {
       if (error) {
-        console.error(error)
+        //console.error(error)
       }
       if (!error) {
         this.props.dispatch(findFriend(this.state.name))
@@ -47,17 +47,16 @@ export class ChooseOpponent extends FormComponent {
     });
   }
 
-  chooseOpponent (opponent) {
-    //this.setState({chosenOpponent: opponent})
+  chooseOpponent(opponent) {
     this.props.dispatch(startMatch(opponent))
   }
 
-  render () {
-    const { t } = this.props;
+  render() {
+    const {t} = this.props;
 
     return (
       <form id="searchFriendsForm" onSubmit={this.handleSubmit.bind(this)} ref="searchform">
-        <h2>{t('headerFindAFriend')}</h2>
+        <h2 className="h4">{t('headerFindAFriend')}</h2>
 
         <FormGroup validationState={this.getValidationState('name')}>
           <ControlLabel htmlFor="form-name">{t('name')}</ControlLabel>
@@ -75,7 +74,7 @@ export class ChooseOpponent extends FormComponent {
         {(() => {
           if (this.props.suggestions.length) {
             return <div>
-              <h3>{t('headerSuggestions')}</h3>
+              <h3 className="h5">{t('headerSuggestions')}</h3>
               <ul>
                 {this.props.suggestions.map(suggestion =>
                   <Opponent key={suggestion._id} opponent={suggestion}/>
@@ -91,7 +90,7 @@ export class ChooseOpponent extends FormComponent {
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
     friends: state.friends.list,
     suggestions: state.friends.suggestions

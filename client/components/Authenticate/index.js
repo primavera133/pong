@@ -1,10 +1,10 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
 import {connect} from 'react-redux'
 import validation from 'react-validation-mixin';
 import strategy from 'joi-validation-strategy';
 import {signIn} from '../../actions/auth.js'
 import {translate} from 'react-i18next';
-import {PageHeader, Panel, FormGroup, FormControl, ControlLabel, Button} from 'react-bootstrap';
+import {Panel, FormGroup, FormControl, ControlLabel, Button} from 'react-bootstrap';
 import FormComponent from '../FormComponent';
 import {loginValidationSchema} from '../../../validators/login';
 
@@ -41,8 +41,7 @@ export class Authenticate extends FormComponent {
     const {t} = this.props;
 
     return (
-      <div className="container">
-        <PageHeader>Pong <small>back and forth</small></PageHeader>
+      <div>
         <Panel header={t('loginHeader')}>
           <form id="loginForm" onSubmit={this.handleSubmit.bind(this)}>
             <FormGroup validationState={this.getValidationState('email')}>

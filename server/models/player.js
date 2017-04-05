@@ -11,6 +11,16 @@ const playerSchema = Schema({
     min: 8,
     required: true
   },
+  passwordSalt1: {
+    type: String,
+    min: 16,
+    required: true
+  },
+  passwordSalt2: {
+    type: String,
+    min: 16,
+    required: true
+  },
   email: {
     type: String,
     unique: true,

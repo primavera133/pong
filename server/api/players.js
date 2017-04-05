@@ -1,8 +1,9 @@
 import Player from '../models/player'
 import {idValidationSchema, nameValidationSchema} from '../../validators/basic';
 import {playerValidationSchema} from '../../validators/player';
-import {setPlayer} from '../helpers/authHelper';
+import {setPlayer, hashPwd} from '../helpers/authHelper';
 import Boom from 'boom';
+import randomToken from 'random-token';
 
 const getPlayer = (request, reply) => {
   Player.findById(request.params.id, (error, players) => {
@@ -36,7 +37,19 @@ const signUpPlayer = (request, reply) => {
   if (validatedPayload.error) {
     return reply().redirect(Boom.badData(error));
   }
-  const player = new Player(validatedPayload.value)
+
+  const salt1 = randomToken(16)
+  const salt2 = randomToken(16)
+  const hashedPwd = hashPwd(validatedPayload.value.password, salt1, salt2)
+
+  const playerOpts = {
+    ...validatedPayload.value,
+    password: hashedPwd,
+    passwordSalt1: salt1,
+    passwordSalt2: salt2
+  }
+
+  const player = new Player(playerOpts)
   player.save((error, player) => {
     if (error) {
       if (error.code === 11000) {

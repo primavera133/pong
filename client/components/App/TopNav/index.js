@@ -24,7 +24,9 @@ export class TopNav extends Component {
           <Navbar.Brand>
             {(() => {
               if (this.props.auth.scope) {
-                return (<a href="/">{t('appName')}</a> )
+                return (
+                  <a href="/">{t('appName')}</a>
+                )
               } else {
                 return (<a href="/login">{t('appName')}</a>)
               }
@@ -39,12 +41,16 @@ export class TopNav extends Component {
               <Navbar.Collapse>
                 <Nav>
                   <NavItem eventKey={1} href="/matches">{t('matchlist')}</NavItem>
-                  <NavItem eventKey={1} href="/startmatch">{t('startmatch')}</NavItem>
+                  <NavItem eventKey={2} href="/startmatch">{t('startmatch')}</NavItem>
                 </Nav>
                 <Nav pullRight>
-                  <NavItem eventKey={2} href="/about">{t('about')}</NavItem>
-                  <NavItem eventKey={1} onClick={this.handleLogout}>{t('logout')}</NavItem>
+                  <NavItem eventKey={3} href="/account">{this.props.auth.name}</NavItem>
+                  <NavItem eventKey={4} href="/about">{t('about')}</NavItem>
+                  <NavItem eventKey={5} onClick={this.handleLogout}>{t('logout')}</NavItem>
                 </Nav>
+                <Navbar.Text pullRight>
+
+                </Navbar.Text>
               </Navbar.Collapse>
             )
           } else {

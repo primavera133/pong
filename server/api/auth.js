@@ -11,7 +11,7 @@ const login = (request, reply) => {
     return reply(Boom.expectationFailed('Missing email or password'))
   }
 
-  if (email === config.get('auth.email') && password === config.get('auth.password')) {
+  if (email === process.env.AUTH_EMAIL && password === process.env.AUTH_PWD) {
     //admin
 
     setPlayer({
@@ -70,10 +70,10 @@ exports.register = (server, options, next) => {
   server.register(CookieAuth, (error) => {
     if (error) throw error
 
-    server.app.cache = server.cache({segment: 'sessions', expiresIn: config.get('auth.ttl')});
+    server.app.cache = server.cache({segment: 'sessions', expiresIn: process.env.AUTH_TTL});
 
     server.auth.strategy('session', 'cookie', {
-      password: config.get('auth.key'),
+      password: process.env.AUTH_KEY,
       cookie: 'sid-ratatoskify',
       isSecure: false
     })

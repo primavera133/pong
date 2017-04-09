@@ -1,6 +1,8 @@
 .DS_Store
 node_modules
 npm-debug.log
+config/development.json
+config/production.json
 dist/client/static/bundle.js
 
 .idea/

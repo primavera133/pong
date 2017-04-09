@@ -6,6 +6,7 @@
     "key": "EgPrcWSqwCkaV5N6BkpAAYdac3MgpFhBvNZ5hLtJkdvLwu2C5PsamQADMt9pbE5R"
   },
   "database": {
-    "host": "mongodb://localhost/pong"
+    "mlab": false,
+    "host": "mongodb://localhost/ratatoskify"
   }
 }

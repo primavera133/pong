@@ -74,7 +74,7 @@ exports.register = (server, options, next) => {
 
     server.auth.strategy('session', 'cookie', {
       password: config.get('auth.key'),
-      cookie: 'sid-pong',
+      cookie: 'sid-ratatoskify',
       isSecure: false
     })
 

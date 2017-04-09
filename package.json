@@ -1,13 +1,15 @@
 {
-  "name": "pong",
+  "name": "Ratatoskify",
   "version": "0.0.1",
   "description": "A two person match engine",
   "main": "index.js",
   "author": "Jonas Myrenås",
   "scripts": {
+    "postinstall": "yarn run build",
     "mongo:start": "mongod --config /usr/local/etc/mongod.conf --fork --logpath /dev/null",
     "mongo:stop": "mongo admin --eval 'db.shutdownServer()' > /dev/null",
-    "dev": "NODE_ENV=development nodemon --watch server --watch validators --watch config index.js --debug"
+    "dev": "NODE_ENV=development nodemon --watch server --watch validators --watch config index.js --debug",
+    "build": "webpack -p --config ./webpack/config.prod.js --progress --profile --colors"
   },
   "dependencies": {
     "axios": "^0.15.3",

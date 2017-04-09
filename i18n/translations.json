@@ -1,7 +1,7 @@
 {
   "sv-SE": {
     "common": {
-      "appName": "Pong"
+      "appName": "Ratatoskify"
     },
     "alerts": {
       "danger": {
@@ -29,7 +29,7 @@
     "topNav": {
       "matchlist":"Dina matcher",
       "startmatch":"Ny match",
-      "about": "Om Pong",
+      "about": "Om Ratatoskify",
       "logout": "Logga ut",
       "login": "Logga in"
     },
@@ -85,7 +85,7 @@
   },
   "en-US": {
     "common": {
-      "appName": "pong"
+      "appName": "Ratatoskify"
     }
   }
 }

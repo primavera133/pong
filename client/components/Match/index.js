@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {loadMatch} from '../../actions/matches'
-import DwarfMatch from '../../games/DwarfThrow/components/DwarfMatch'
+import DwarfMatch from '../../games/dwarfThrow/components/DwarfMatch'
 
 export class Match extends Component {
   constructor(props) {

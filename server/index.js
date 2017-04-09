@@ -9,7 +9,8 @@ import players from './api/players'
 import matches from './api/matches'
 import games from './api/games'
 
-mongoose.connect(process.env.MONGOLAB_URI)
+mongoose.connect(config.get('database.host'))
+console.log(1234567890, config.get('database.host'))
 mongoose.connection.on('error', console.error.bind(console, 'db error:'))
 
 const server = new Hapi.Server({

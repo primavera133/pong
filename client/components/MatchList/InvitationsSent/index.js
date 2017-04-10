@@ -17,7 +17,9 @@ export class InvitationsSent extends Component {
   }
 
   componentWillMount() {
+    console.log(0, this.props)
     if (this.props.matches) {
+      console.log(1, this.props.matches)
       this.state.invitations = this.props.matches.filter(InvitationsSent.matchFilterFactory(this.props.auth._id))
     }
   }

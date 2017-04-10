@@ -51,6 +51,7 @@ export class InvitationsReceived extends Component {
   }
 
   render() {
+    const {t} = this.props;
 
     if (this.state.invitations.length) {
       return (<div>

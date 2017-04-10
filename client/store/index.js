@@ -6,7 +6,7 @@ import reducers from '../reducers';
 
 import createSocketIoMiddleware from 'redux-socket.io';
 import io from 'socket.io-client';
-let socket = io('http://localhost:8000');
+let socket = io(process.env.IO_SOCKET);
 let socketIoMiddleware = createSocketIoMiddleware(socket, "server/");
 
 const reduxRouterMiddleware = syncHistory(browserHistory);

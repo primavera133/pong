@@ -5,6 +5,7 @@
   "main": "index.js",
   "author": "Jonas Myrenås",
   "scripts": {
+    "start": "NODE_ENV=production node index.js",
     "postinstall": "NODE_ENV=production && yarn run build",
     "mongo:start": "mongod --config /usr/local/etc/mongod.conf --fork --logpath /dev/null",
     "mongo:stop": "mongo admin --eval 'db.shutdownServer()' > /dev/null",

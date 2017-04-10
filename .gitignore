@@ -2,6 +2,7 @@
 node_modules
 npm-debug.log
 config/development.json
+config/development.sh
 config/production.json
 dist/client/static/bundle.js
 

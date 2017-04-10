@@ -1,4 +1,3 @@
-import config from 'config'
 import CookieAuth from 'hapi-auth-cookie'
 import Player from '../models/player'
 import {authValidationSchema} from '../../validators/auth'
@@ -70,7 +69,7 @@ exports.register = (server, options, next) => {
   server.register(CookieAuth, (error) => {
     if (error) throw error
 
-    server.app.cache = server.cache({segment: 'sessions', expiresIn: process.env.AUTH_TTL});
+    server.app.cache = server.cache({segment: 'sessions', expiresIn: parseInt(process.env.AUTH_TTL, 10)});
 
     server.auth.strategy('session', 'cookie', {
       password: process.env.AUTH_KEY,

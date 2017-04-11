@@ -1,12 +1,11 @@
-import React from 'react'
-import FormComponent from '../FormComponent'
+import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {translate} from 'react-i18next'
 import ChooseOpponent from './ChooseOpponent'
 import SearchForOpponent from './SearchForOpponent'
 import ChooseGame from './ChooseGame'
 
-export class MatchList extends FormComponent {
+export class MatchList extends Component {
   constructor(props) {
     super(props)
   }

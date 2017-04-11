@@ -68,6 +68,10 @@
       "noMatchesFound": "Inga matcher hittades men ",
       "startAMatch": "starta en match!"
     },
+    "notFoundView": {
+      "header": "404 - Sidan kan inte hittas",
+      "text": "Sidan du söker finns inte här."
+    },
     "invitationsReceived": {
       "header": "Du är inbjuden"
     },

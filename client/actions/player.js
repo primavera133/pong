@@ -12,3 +12,15 @@ export const signUp = (payload, path) => (dispatch) => {
       dispatch(httpError(error))
     });
 }
+
+export const updateAccount = (id, payload, path) => (dispatch) => {
+  return request
+    .put(`/api/player/${id}`, payload)
+    .then(({data}) => {
+      dispatch(routeActions.push(path))
+    })
+    .catch((error) => {
+      dispatch(httpError(error))
+    });
+}
+

@@ -7,6 +7,7 @@ import i18n from './config/i18n';
 import store from './store';
 
 import About from './components/About'
+import Account from './components/Account'
 import App from './components/App'
 import Authenticate from './components/Authenticate'
 import Match from './components/Match'
@@ -24,6 +25,7 @@ render((
         <Route path="/" component={App}>
           <IndexRedirect to='/matches'/>
           <Route path="/about" component={About}/>
+          <Route path="/account" component={Account} onEnter={requireAuth}/>
           <Route path='/login' component={Authenticate} onEnter={requireAuth}/>
           <Route path="/matches" component={MatchList} onEnter={requireAuth}/>
           <Route

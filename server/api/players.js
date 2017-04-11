@@ -1,6 +1,6 @@
 import Player from '../models/player'
 import {idValidationSchema, nameValidationSchema} from '../../validators/basic';
-import {playerValidationSchema} from '../../validators/player';
+import {playerValidationSchema, playerUpdateValidationSchema} from '../../validators/player';
 import {setPlayer, hashPwd} from '../helpers/authHelper';
 import Boom from 'boom';
 import randomToken from 'random-token';
@@ -95,18 +95,26 @@ const signUpPlayer = (request, reply) => {
   })
 }
 
-const updateMatch = (request, reply) => {
-  Player.findOne({_id: request.params.id}, (error, match) => {
+const updatePlayer = (request, reply) => {
+  Player.findOne({_id: request.params.id}, (error, player) => {
     if (error) return reply(Boom.badGateway(error))
 
-    const validatedPayload = playerValidationSchema.validate(request.payload)
+    const validatedPayload = playerUpdateValidationSchema.validate(request.payload)
     if (validatedPayload.error) {
       return reply().redirect(Boom.badData(error));
     }
 
-    const i = Object.assign(match, validatedPayload.value)
-    i.save((error, doc) => {
+    const _player = Object.assign(player, validatedPayload.value)
+    _player.save((error, doc) => {
       if (error) return reply(Boom.badGateway(error.message))
+
+      setPlayer({
+        request,
+        _id: doc._id,
+        name: doc.name,
+        email: doc.email,
+        scope: 'player'
+      });
 
       return reply(doc)
     })
@@ -162,9 +170,9 @@ exports.register = (server, options, next) => {
 
     {
       method: 'PUT',
-      path: '/api/players/{id}',
+      path: '/api/player/{id}',
       config: {
-        handler: updateMatch,
+        handler: updatePlayer,
         auth: 'session',
         validate: {
           params: idValidationSchema

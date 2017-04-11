@@ -1,5 +1,5 @@
 import Joi from 'joi'
-import { matchValidationSchema } from './match'
+import {matchValidationSchema} from './match'
 
 export const playerValidationSchema = Joi.object().keys({
   name: Joi
@@ -37,6 +37,27 @@ export const playerValidationSchema = Joi.object().keys({
       _id: Joi.string(),
       name: Joi.string()
     })
+}).options({
+  stripUnknown: true,
+  allowUnknown: true
+});
+
+export const playerUpdateValidationSchema = Joi.object().keys({
+  name: Joi
+    .string()
+    .trim()
+    .invalid(['superadmin', 'admin'])
+    .required(),
+  email: Joi
+    .string()
+    .email()
+    .trim()
+    .required(),
+  phone: Joi
+    .string()
+    .trim()
+    .allow('')
+    .optional(),
 }).options({
   stripUnknown: true,
   allowUnknown: true

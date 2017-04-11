@@ -54,6 +54,16 @@
       "signUpSubmit": "Skapa ett konto",
       "loginLink": "Logga in"
     },
+    "accountView": {
+      "accountHeader": "Skapa ett konto",
+      "name": "Ditt namn",
+      "email": "Din epost",
+      "password": "Önskat lösenord (minst 8 tecken)",
+      "passwordMatch": "Upprepa lösenord",
+      "phone": "Telefonnummer",
+      "accountSubmit": "Spara dina ändringar",
+      "loginLink": "Logga in"
+    },
     "matchStartView": {
       "header1": "Starta en ny match",
       "headerFriendslist": "Vänner",

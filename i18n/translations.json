@@ -33,11 +33,16 @@
       "logout": "Logga ut",
       "login": "Logga in"
     },
+    "aboutView": {
+      "header": "Om Ratatoskify",
+      "text": "Spela goa spel mot varandra"
+    },
     "authenticateView": {
       "loginHeader": "Logga in",
       "email": "E-mail",
       "password": "Password",
-      "loggIn": "Logga in"
+      "loggIn": "Logga in",
+      "signUpLink": "Skapa konto"
     },
     "signUpView": {
       "signUpHeader": "Skapa ett konto",

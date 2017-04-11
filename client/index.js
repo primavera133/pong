@@ -6,6 +6,7 @@ import { I18nextProvider } from 'react-i18next';
 import i18n from './config/i18n';
 import store from './store';
 
+import About from './components/About'
 import App from './components/App'
 import SignUp from './components/SignUp'
 import Match from './components/Match'
@@ -24,6 +25,7 @@ render((
           <Route path="/signup" component={SignUp} onEnter={requireAuth}/>
           <Route path='/login' component={Authenticate} onEnter={requireAuth}/>
           <Route path="/startmatch" component={MatchStart} onEnter={requireAuth}/>
+          <Route path="/about" component={About} />
           <Route path="/matches" component={MatchList} onEnter={requireAuth}/>
           <Route
             path="/match/:id"

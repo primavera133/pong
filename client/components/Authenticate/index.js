@@ -79,7 +79,7 @@ export class Authenticate extends FormComponent {
           </form>
         </Panel>
 
-        <a href="/signup">Sign up</a>
+        <a href="/signup">{t('signUpLink')}</a>
       </div>
     )
   }

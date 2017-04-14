@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import NotYourTurn from '../NotYourTurn'
 import {translate} from 'react-i18next'
-import {throwDwarf} from '../../actions/game'
+import {throwDwarf} from '../../../actions/dwarfthrow'
 
 export class DwarfMatch extends Component {
   constructor(props) {
@@ -23,7 +23,7 @@ export class DwarfMatch extends Component {
         <h2 className="h4">{match.playerOne.name} vs {match.playerTwo.name}</h2>
         {(() => {
           if (!this.props.isPlayersTurn) {
-            return <NotYourTurn/>
+            return <NotYourTurn match={match} />
           } else {
             if (match)
               return <div>

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {loadMatch} from '../../actions/matches'
-import DwarfMatch from '../../games/dwarfThrow/components/DwarfMatch'
+import DwarfMatch from '../DwarfThrow/DwarfMatch'
 
 export class Match extends Component {
   constructor(props) {
@@ -39,7 +39,7 @@ export class Match extends Component {
     return (
       <div>
         {(() => {
-          if (match.game.codeName == 'dwarfThrow') {
+          if (match.game.codeName === 'dwarfThrow') {
             return <DwarfMatch
               match={match}
               auth={auth}

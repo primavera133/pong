@@ -32,19 +32,19 @@ io.on('connection', (socket) => {
   socket.on('action', (action) => {
     switch (action.type) {
       case 'server/room/join':
-        console.log('server/join', action.data)
+        //console.log('server/join', action.data)
         socket.join(action.data.room)
         break;
       case 'server/room/emit':
-        console.log('server/room/emit', action.data)
+        //console.log('server/room/emit', action.data)
         io.sockets.in(action.data.room).emit('action', {type: 'RECEIVE_ROOM_EMIT', data: JSON.stringify(action.data)});
         break;
       case 'server/room/broadcast':
-        console.log('server/room/broadcast', action.data)
+        //console.log('server/room/broadcast', action.data)
         socket.broadcast.to(action.data.room).emit('action', {type: 'RECEIVE_ROOM_BROADCAST', data: JSON.stringify(action.data)});
         break;
       case 'server/hello':
-        console.log('server/hello', action.data);
+        //console.log('server/hello', action.data);
         socket.emit('action', {type: 'RECEIVE_IO', data: 'emit! ' + action.data});
         socket.broadcast.emit('action', {type: 'RECEIVE_IO', data: 'broadcast! ' + action.data});
         io.sockets.emit('action', {type: 'RECEIVE_IO', data: 'yall! ' + action.data});

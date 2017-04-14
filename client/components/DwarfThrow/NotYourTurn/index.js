@@ -7,9 +7,10 @@ export class NotYourTurn extends Component {
   }
 
   render() {
-    const {t} = this.props
+    const {t, match} = this.props;
     return (
       <div>
+        <p>{t('dwarfThrow.throws')} {match.gameState.dwarvesThrown}</p>
         <p>{t('dwarfThrow.notYourTurn')}</p>
       </div>
     )
